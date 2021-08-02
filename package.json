@@ -1,9 +1,30 @@
 {
   "name": "cached-prisma",
   "version": "0.1.0",
+  "description": "A Prisma client abstraction that simplifies caching.",
+  "repository": "https://github.com/JoelLefkowitz/cached-prisma.git",
+  "author": "Joel Lefkowitz",
+  "license": "MIT",
+  "keywords": [
+    "Prisma",
+    "Memcached",
+    "cache",
+    "client",
+    "singleton"
+  ],
+  "scripts": {
+    "cspell": "cspell '.*' '*' '**/*'",
+    "eslint": "eslint 'src/**/*.ts' --fix",
+    "prettier": "prettier . --write --ignore-path .gitignore",
+    "remark": "remark -r .remarkrc -i .gitignore . .github",
+    "build": "tsc -p src/tsconfig.json",
+    "lint": "yarn cspell && yarn eslint && yarn remark",
+    "format": "yarn prettier",
+    "test": "yarn build && nyc mocha dist --exit"
+  },
   "dependencies": {
     "@prisma/client": "^2.27.0",
-    "memcached": "^2.2.2"    
+    "memcached": "^2.2.2"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

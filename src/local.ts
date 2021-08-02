@@ -1,4 +1,4 @@
-import { Cache, Maybe } from './prisma';
+import { Cache, Maybe } from "./prisma";
 
 export type Serialized = { key: string; value: string };
 

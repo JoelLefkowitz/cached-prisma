@@ -1,0 +1,40 @@
+{
+  "language": "en",
+  "ignorePaths": [
+    "./.cspell.txt",
+    ".DS_Store",
+    ".gitignore",
+    "*.coverage",
+    "*.types",
+    "**/__pycache__/**",
+    "**/*.egg-info/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/dist/**",
+    "**/fonts/**",
+    "**/node_modules/**",
+    "**/package-lock.json",
+    "**/publish/**",
+    "**/sqlite3",
+    "**/venv/**"
+  ],
+  "dictionaries": [
+    "misc",
+    "node",
+    "python",
+    "softwareTerms",
+    "typescript",
+    "local"
+  ],
+  "words": [
+    "bumpversion",
+    "cobertura",
+    "codacy",
+    "idempotently",
+    "istanbuljs",
+    "joellefkowitz",
+    "lefkowitz",
+    "mochawesome",
+    "remarkrc"
+  ]
+}

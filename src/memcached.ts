@@ -1,12 +1,12 @@
-import * as MemcachedClient from 'memcached';
+import * as MemcachedClient from "memcached";
 
-import { AsyncCache, Maybe } from './prisma';
+import { AsyncCache, Maybe } from "./prisma";
 
 export class Memcached implements AsyncCache {
   private _client: MemcachedClient;
   private _lifetime: number;
 
-  constructor(address: string = '127.0.0.0:11211', lifetime: number = 10) {
+  constructor(address = "127.0.0.0:11211", lifetime = 10) {
     this._client = new MemcachedClient(address);
     this._lifetime = lifetime;
   }

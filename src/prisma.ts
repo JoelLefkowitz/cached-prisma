@@ -1,6 +1,6 @@
-import { FixedTuple } from './local';
-import { Memcached } from './memcached';
-import { PrismaClient } from '@prisma/client';
+import { FixedTuple } from "./local";
+import { Memcached } from "./memcached";
+import { PrismaClient } from "@prisma/client";
 
 export type Maybe<T> = T | null;
 
@@ -15,12 +15,12 @@ export interface AsyncCache {
 }
 
 export const IdempotentActions = [
-  'findUnique',
-  'findMany',
-  'findFirst',
-  'queryRaw',
-  'aggregate',
-  'count',
+  "findUnique",
+  "findMany",
+  "findFirst",
+  "queryRaw",
+  "aggregate",
+  "count",
 ];
 
 export class Prisma {
@@ -42,7 +42,7 @@ export class Prisma {
 
   static get publicClientMethods(): string[] {
     return Object.getOwnPropertyNames(Prisma._client).filter(
-      (property: string) => !property.startsWith('_')
+      (property: string) => !property.startsWith("_")
     );
   }
 
@@ -73,5 +73,5 @@ export class FPrisma extends Prisma {
 }
 
 export class MPrisma extends Prisma {
-  cache = new Memcached('127.0.0.1:11211', 10);
+  cache = new Memcached("127.0.0.1:11211", 10);
 }

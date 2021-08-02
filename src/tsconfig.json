@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "../dist",
+    "target": "es6", // Compile for browser environments.
+    "module": "CommonJS", // Support ts-node invocations.
+    "moduleResolution": "node", // Mimic the Node.js run-time resolution strategy.
+    "inlineSourceMap": true
+  }
+}
