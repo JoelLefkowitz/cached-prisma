@@ -44,6 +44,7 @@
     "nyc": "^15.1.0",
     "prettier": "^2.3.2",
     "prisma": "^2.28.0",
+    "prisma-cli": "^1.0.9",
     "remark-cli": "^9.0.0",
     "remark-lint": "^8.0.0",
     "remark-preset-lint-recommended": "^5.0.0",

@@ -14,7 +14,7 @@ A Prisma client abstraction that simplifies caching.
 
 ## Usage
 
-To implement a central cache and to keep a single database connection the Prisma class is a singleton:
+To implement a cache and divert the prisma client's internals we use readonly singleton instances for the client and cache:
 
 ```ts
 import { Prisma } from 'cached-prisma';
@@ -25,7 +25,16 @@ const client2 = new Prisma().client;
 client1 === client2;
 ```
 
-Caches must implement read and write methods:
+```ts
+import { Prisma } from 'cached-prisma';
+
+const cache1 = new Prisma().cache;
+const cache2 = new Prisma().cache;
+
+cache1 === cache2;
+```
+
+Caches must implement safe read and write methods:
 
 ```ts
 export type Maybe<T> = T | null;
@@ -69,7 +78,7 @@ class CustomPrisma extends Prisma {
 
 Note that the second parameter to the Memcached constructor is the storage lifetime of each write in seconds.
 
-We cache the following methods which do not mutate state and behave idempotently:
+We cache the following methods which do not mutate state:
 
 - findUnique
 - findMany
@@ -77,6 +86,17 @@ We cache the following methods which do not mutate state and behave idempotently
 - queryRaw
 - aggregate
 - count
+
+After any of the following state mutating methods we flush the cache:
+
+- create
+- createMany
+- delete
+- deleteMany
+- executeRaw
+- update
+- updateMany
+- upsert
 
 ## Tests
 
