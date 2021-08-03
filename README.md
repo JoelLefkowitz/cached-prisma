@@ -14,21 +14,15 @@ A Prisma client abstraction that simplifies caching.
 
 ## Usage
 
+To implement a central cache and to keep a single database connection the Prisma class is a singleton:
+
 ```ts
 import { Prisma } from 'cached-prisma';
 
-const client = new Prisma().client;
-```
-
-To implement a central cache and keep database connections to a minimum the Prisma class is a singleton:
-
-```ts
 const client1 = new Prisma().client;
 const client2 = new Prisma().client;
 
 client1 === client2;
-
-true;
 ```
 
 Caches must implement read and write methods:

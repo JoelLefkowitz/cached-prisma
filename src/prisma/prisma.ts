@@ -1,4 +1,4 @@
-import { AsyncCache, Cache, IdempotentActions } from '../types';
+import { AsyncCache, Cache, ImpureActions, PureActions } from '../types';
 
 import { LruCache } from '../caches/local';
 import { PrismaClient } from '@prisma/client';
@@ -7,24 +7,27 @@ export class Prisma {
   private static _client: PrismaClient;
   private static _cache: Cache | AsyncCache;
 
-  // We don't want this to be static so that it can be overridden.
-  cacheFactory = (): Cache => new LruCache(100);
+  cacheFactory = (): Cache | AsyncCache => new LruCache(100);
 
-  static flushCache(): void {
-    delete Prisma._cache;
+  flushCache(): void {
+    Prisma._cache = this.cacheFactory();
   }
 
   get client(): PrismaClient {
     if (!Prisma._client) {
       Prisma._client = new PrismaClient();
-    }
-
-    if (!Prisma._cache) {
-      Prisma._cache = this.cacheFactory();
       this.cacheClientMethods();
     }
 
     return Prisma._client;
+  }
+
+  get cache(): Cache | AsyncCache {
+    if (!Prisma._cache) {
+      this.flushCache();
+    }
+
+    return Prisma._cache;
   }
 
   get publicClientMethods(): string[] {
@@ -35,16 +38,25 @@ export class Prisma {
 
   cacheClientMethods(): void {
     for (const field of this.publicClientMethods) {
-      for (const action of IdempotentActions) {
-        const pristine = Prisma._client[field][action];
+      for (const action of ImpureActions) {
+        const pristine = this.client[field][action];
+
+        this.client[field][action] = async (...args: unknown[]) => {
+          this.flushCache();
+          return await pristine(...args);
+        };
+      }
+
+      for (const action of PureActions) {
+        const pristine = this.client[field][action];
 
         Prisma._client[field][action] = async (...args: unknown[]) => {
           const key = JSON.stringify({ field, action, args });
-          const cached = JSON.parse(await Prisma._cache.read(key));
+          const cached = JSON.parse(await this.cache.read(key));
 
           if (!cached) {
-            const evaluated = JSON.stringify(await pristine(...args));
-            await Prisma._cache.write(key, evaluated);
+            const evaluated = await pristine(...args);
+            await this.cache.write(key, JSON.stringify(evaluated));
             return evaluated;
           }
 

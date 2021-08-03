@@ -10,11 +10,22 @@ export interface AsyncCache {
   write: (key: string, value: string) => Promise<void>;
 }
 
-export const IdempotentActions = [
-  'findUnique',
-  'findMany',
-  'findFirst',
-  'queryRaw',
+export const PureActions = [
   'aggregate',
   'count',
+  'findFirst',
+  'findMany',
+  'findUnique',
+  'queryRaw',
+];
+
+export const ImpureActions = [
+  'create',
+  'createMany',
+  'delete',
+  'deleteMany',
+  'executeRaw',
+  'update',
+  'updateMany',
+  'upsert',
 ];

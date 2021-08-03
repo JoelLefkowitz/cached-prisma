@@ -41,6 +41,7 @@
     "mochawesome",
     "postgres",
     "postgresql",
-    "remarkrc"
+    "remarkrc",
+    "upsert"
   ]
 }
