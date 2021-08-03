@@ -63,7 +63,7 @@
     "pyparsing",
     "pytz",
     "qthelp",
-    "quickdocs"
+    "quickdocs",
     "remarkrc",
     "serializinghtml",
     "snowballstemmer",
