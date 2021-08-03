@@ -98,6 +98,34 @@ After any of the following state mutating methods we flush the cache:
 - updateMany
 - upsert
 
+## Profiling
+
+If you provision a database and a memcached instance there is a crude performance profiler included as a sanity check:
+
+```ts
+tsc -p profilers
+node dist/profilers/time.js
+```
+
+```sh
+1000 prisma reads:
+┌─────────┬─────────────────┬─────────────┐
+│ (index) │        0        │      1      │
+├─────────┼─────────────────┼─────────────┤
+│    0    │ 'Without cache' │ 2.535861637 │
+│    1    │ 'LruMap cache'  │ 0.080468443 │
+│    2    │   'Memcached'   │ 0.032572969 │
+└─────────┴─────────────────┴─────────────┘
+1000 prisma read and writes:
+┌─────────┬─────────────────┬──────────────┐
+│ (index) │        0        │      1       │
+├─────────┼─────────────────┼──────────────┤
+│    0    │ 'Without cache' │ 10.244921313 │
+│    1    │ 'LruMap cache'  │ 10.869037333 │
+│    2    │   'Memcached'   │  9.9422369   │
+└─────────┴─────────────────┴──────────────┘
+```
+
 ## Tests
 
 To run unit tests:

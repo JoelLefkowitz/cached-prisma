@@ -15,4 +15,5 @@ coverage/
 docs/
 Gruntfile.js
 mochawesome-report/
+profilers/
 src/
