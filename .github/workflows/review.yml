@@ -43,7 +43,8 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn add global grunt-cli
-          yarn add global prisma prisma-cli
+          yarn global add ts-node
+          yarn global add prisma 
 
       - name: Run linters
         run: grunt lint
