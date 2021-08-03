@@ -20,8 +20,8 @@ const exec = {
   prettier: 'npx prettier . --write --ignore-path .gitignore --single-quote',
   remark: 'npx remark -r .remarkrc --ignore-path .gitignore . .github',
 
-  prismaGenerate: 'prisma generate --schema ./src/database/schema.prisma',
-  prismaMigrate: 'prisma migrate dev --schema ./src/database/schema.prisma',
+  prismaGenerate: 'prisma generate --schema ./src/testdb/schema.prisma',
+  prismaMigrate: 'prisma migrate dev --schema ./src/testdb/schema.prisma',
 
   tsc: 'npx tsc -p src/tsconfig.json',
   tscTest: 'npx tsc -p src/tsconfig.spec.json',
@@ -50,6 +50,7 @@ module.exports = (grunt) => {
   grunt.initConfig({
     exec,
     clean: {
+      file: 'cached-prisma-*.tgz',
       dist: './dist',
     },
     env: {

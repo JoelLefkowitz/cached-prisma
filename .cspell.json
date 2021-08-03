@@ -42,6 +42,7 @@
     "postgres",
     "postgresql",
     "remarkrc",
+    "testdb",
     "upsert"
   ]
 }

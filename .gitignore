@@ -63,6 +63,7 @@ __pypackages__/
 \__pycache__/
 bazel-out/
 build/
+cached-prisma-*.tgz
 celerybeat-schedule/
 celerybeat.pid
 chrome-profiler-events*.json

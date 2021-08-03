@@ -1,6 +1,6 @@
-import * as MemcachedClient from 'memcached';
-
 import { AsyncCache, Maybe } from '../types';
+
+import MemcachedClient from 'memcached';
 
 export class Memcached implements AsyncCache {
   private _client: MemcachedClient;

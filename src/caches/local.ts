@@ -1,6 +1,6 @@
 import { Cache, Maybe } from '../types';
 
-import { LruMap } from 'collections/lru-map';
+import LruMap from 'collections/lru-map';
 
 export type Serialized = { key: string; value: string };
 

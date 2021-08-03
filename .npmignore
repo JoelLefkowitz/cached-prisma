@@ -1,0 +1,15 @@
+.bumpversion.cfg
+.cspell.json
+.eslintrc.json
+.github/
+.nyc_output/
+.nycrc
+.remarkrc
+.tokeignore
+cached-prisma-*.tgz
+CHANGELOG.md
+CONTRIBUTING.md
+coverage/
+Gruntfile.js
+mochawesome-report/
+src/
