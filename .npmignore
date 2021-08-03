@@ -4,12 +4,15 @@
 .github/
 .nyc_output/
 .nycrc
+.quickdocs.yml
+.readthedocs.yml
 .remarkrc
 .tokeignore
 cached-prisma-*.tgz
 CHANGELOG.md
 CONTRIBUTING.md
 coverage/
+docs/
 Gruntfile.js
 mochawesome-report/
 src/

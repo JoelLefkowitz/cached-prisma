@@ -6,7 +6,7 @@
   "author": "Joel Lefkowitz",
   "license": "MIT",
   "main": "dist/main.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/main.d.ts",
   "keywords": [
     "Prisma",
     "Memcached",

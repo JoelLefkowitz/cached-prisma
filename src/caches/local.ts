@@ -1,4 +1,4 @@
-import { Cache, Maybe } from '../types';
+import { Cache, Maybe } from '../main';
 
 import LruMap from 'collections/lru-map';
 

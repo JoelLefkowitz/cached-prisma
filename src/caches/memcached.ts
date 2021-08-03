@@ -1,4 +1,4 @@
-import { AsyncCache, Maybe } from '../types';
+import { AsyncCache, Maybe } from '../main';
 
 import MemcachedClient from 'memcached';
 

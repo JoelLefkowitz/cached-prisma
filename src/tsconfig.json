@@ -5,9 +5,9 @@
     "module": "CommonJS", // Support ts-node invocations.
     "moduleResolution": "node", // Mimic the Node.js run-time resolution strategy.
     "esModuleInterop": true,
-    "inlineSourceMap": true
+    "inlineSourceMap": true,
+    "declaration": true
   },
-  "declaration": true,
   "exclude": [
     "./**/*.spec.ts"
   ]
