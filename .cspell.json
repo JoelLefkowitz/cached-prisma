@@ -39,10 +39,12 @@
     "joellefkowitz",
     "lefkowitz",
     "mochawesome",
+    "nycrc",
     "postgres",
     "postgresql",
     "remarkrc",
     "testdb",
+    "tokeignore",
     "upsert"
   ]
 }

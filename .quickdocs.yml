@@ -1,0 +1,7 @@
+project: cached-prisma
+version: 0.1.0
+author: Joel Lefkowitz
+verbose_name: Cached Prisma
+html_title: Cached Prisma
+github_url: https://github.com/JoelLefkowitz/cached-prisma
+
