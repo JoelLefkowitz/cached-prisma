@@ -1,7 +1,7 @@
 import { AsyncCache, Cache, ImpureActions, PureActions } from '../main';
 
 import { LruCache } from '../caches/local';
-import { PrismaClient } from 'prisma';
+import { PrismaClient } from '@prisma/client';
 
 export class Prisma {
   private static _client: PrismaClient;
