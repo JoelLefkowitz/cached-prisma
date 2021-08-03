@@ -50,7 +50,7 @@ jobs:
         run: grunt lint
 
       - name: Generate the test prisma schema
-        run: grunt exec:prismaGenerate
+        run: grunt migrateDev
 
       - name: Set a random postgres password
         uses: joellefkowitz/random-env@v1.0.0

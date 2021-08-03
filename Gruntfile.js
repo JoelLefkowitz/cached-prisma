@@ -77,6 +77,12 @@ module.exports = (grunt) => {
   );
 
   grunt.registerTask(
+    'migrateDev',
+    'Migrate the database in development mode.',
+    cleanExecs(['env:db', 'prismaMigrate'])
+  );
+
+  grunt.registerTask(
     'build',
     'Compile the source code for a production environment.',
     cleanExecs(['tsc'])
