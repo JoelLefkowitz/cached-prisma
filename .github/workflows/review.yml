@@ -24,6 +24,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - name: Set up docker image caching
+        uses: actions/cache@v2
+        with:
+          path: /var/lib/docker
+          key: grunt-${{ hashFiles('Gruntfile.js') }}
+          restore-keys: grunt-
+
       - name: Set the node version
         uses: actions/setup-node@v2
         with:
@@ -35,12 +42,30 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install --frozen-lockfile
+          yarn add global prisma
+          yarn add global grunt-cli
 
       - name: Run linters
-        run: yarn lint
+        run: grunt lint
+
+      - name: Generate the test prisma schema
+        run: grunt exec:prismaGenerate
+
+      - name: Set a random postgres password
+        uses: joellefkowitz/random-env@v1.0.0
+        with:
+          names: POSTGRES_PASSWORD
+
+      - name: Create a postgres container
+        run: |
+          grunt exec:postgres
+          grunt exec:prismaMigrate
+
+      - name: Create a memcached container
+        run: grunt exec:memcached
 
       - name: Run unit tests
-        run: yarn test
+        run: grunt test
 
       - name: Report unit test coverage
         uses: codacy/codacy-coverage-reporter-action@v1

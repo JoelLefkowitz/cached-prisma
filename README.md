@@ -15,7 +15,7 @@ A Prisma client abstraction that simplifies caching.
 ## Usage
 
 ```ts
-import { Prisma } from "cached-prisma";
+import { Prisma } from 'cached-prisma';
 
 const client = new Prisma().client;
 ```
@@ -50,26 +50,26 @@ export interface AsyncCache {
 To control the caching mechanism you can extend the Prisma class:
 
 ```ts
-import { FixedTuple } from "cached-prisma";
+import { LruCache } from 'cached-prisma';
 
 class CustomPrisma extends Prisma {
-  cache = new FixedTuple(10);
+  cacheFactory = () => new LruCache(10);
 }
 ```
 
-The default cache is a fixed size tuple/queue that pops values as it surpasses its maximum length.
+The default cache is a fixed size queue that pops values as it surpasses its maximum length.
 
 ```ts
-new FixedTuple(100);
+new LruCache(100);
 ```
 
 Memcached support is provided out of the box:
 
 ```ts
-import { Memcached } from "cached-prisma";
+import { Memcached } from 'cached-prisma';
 
 class CustomPrisma extends Prisma {
-  cache = new Memcached("127.0.0.1:11211", 10);
+  cacheFactory = () => new Memcached('127.0.0.1:11211', 10);
 }
 ```
 
@@ -89,7 +89,7 @@ We cache the following methods which do not mutate state and behave idempotently
 To run unit tests:
 
 ```bash
-yarn test
+grunt test
 ```
 
 ## Documentation
@@ -101,13 +101,13 @@ This repository's documentation is hosted on [readthedocs][readthedocs].
 To run linters:
 
 ```bash
-yarn lint
+grunt lint
 ```
 
 To run formatters:
 
 ```bash
-yarn format
+grunt format
 ```
 
 ## Continuous integration

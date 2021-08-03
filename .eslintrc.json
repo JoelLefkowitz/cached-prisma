@@ -14,17 +14,7 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
-      ],
-      "parserOptions": {
-        "sourceType": "module",
-        "project": "./src/tsconfig.json"
-      },
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-empty-interface": "off",
-        "@typescript-eslint/no-empty-function": "off",
-        "no-invalid-regexp": "off"
-      }
+      ]
     }
   ]
 }

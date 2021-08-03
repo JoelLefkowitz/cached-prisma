@@ -12,6 +12,7 @@
     "**/coverage/**",
     "**/dist/**",
     "**/fonts/**",
+    "**/mochawesome-report/**",
     "**/node_modules/**",
     "**/package-lock.json",
     "**/publish/**",
@@ -27,14 +28,19 @@
     "local"
   ],
   "words": [
+    "autoincrement",
     "bumpversion",
     "cobertura",
     "codacy",
+    "datasource",
+    "gruntfile",
     "idempotently",
     "istanbuljs",
     "joellefkowitz",
     "lefkowitz",
     "mochawesome",
+    "postgres",
+    "postgresql",
     "remarkrc"
   ]
 }
