@@ -6,6 +6,7 @@ collections:
 
 excludes:
   - .cspell.json
+  - .github/workflows/review.yml
   - Gruntfile.js
   - package.json
   - README.md
