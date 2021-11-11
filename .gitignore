@@ -17,6 +17,7 @@ __pypackages__/
 .idea/
 .installed.cfg
 .ipynb_checkpoints
+.mocha/
 .mypy_cache/
 .nox/
 .nyc_output/
@@ -34,8 +35,6 @@ __pypackages__/
 .test_report.*
 .tox/
 .venv
-.vscode/*
-.vscode/*
 .vscode/settings.json
 .webassets-cache
 *.code-workspace
@@ -59,11 +58,11 @@ __pypackages__/
 *.swp
 *.tfstate
 *.tfstate.backup
+*.tgz
 *$py.class
 \__pycache__/
 bazel-out/
 build/
-cached-prisma-*.tgz
 celerybeat-schedule/
 celerybeat.pid
 chrome-profiler-events*.json

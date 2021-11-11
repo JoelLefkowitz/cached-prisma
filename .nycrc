@@ -1,10 +1,10 @@
 {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "exclude": [
-        "**/*.spec.ts"
-    ],
-    "reporter": [
-        "cobertura",
-         "text"
-    ]
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "reporter": [
+    "cobertura",
+    "text"
+  ]
 }

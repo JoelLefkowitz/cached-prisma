@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "../dist",
-    "target": "es5", // Compile for npm.
-    "module": "CommonJS", // Support ts-node invocations.
-    "moduleResolution": "node", // Mimic the Node.js run-time resolution strategy.
+    "declaration": true,
     "esModuleInterop": true,
     "inlineSourceMap": true,
-    "declaration": true
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "outDir": "../dist",
+    "strictNullChecks": true,
+    "target": "es5"
   },
+  "include": [
+    "./**/*.ts"
+  ],
   "exclude": [
     "./**/*.spec.ts"
   ]

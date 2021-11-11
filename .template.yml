@@ -1,0 +1,24 @@
+output: .
+
+collections:
+  - common
+  - typescript
+
+excludes:
+  - .cspell.json
+  - Gruntfile.js
+  - package.json
+  - README.md
+
+render_context:
+  name: cached-prisma
+  description: A Prisma client abstraction that simplifies caching.
+  version: 1.1.1
+  author: joellefkowitz
+  codacy_id: 00658bb866d6482184b86d16d3ce5ae8
+  keywords:
+    - Prisma
+    - Memcached
+    - cache
+    - client
+    - singleton
