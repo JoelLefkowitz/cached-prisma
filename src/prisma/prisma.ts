@@ -4,7 +4,7 @@ import { LruCache } from '../caches/local';
 import { PrismaClient } from '@prisma/client';
 
 export class Prisma {
-  private static _client: PrismaClient;
+  private static _client: PrismaClient & { [index: string]: any };
   private static _cache: Cache | AsyncCache;
 
   cacheFactory = (): Cache | AsyncCache => new LruCache(100);
