@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="./local.d.ts" />
+
 import { Cache, Maybe } from '../main';
 
 import LruMap from 'collections/lru-map';
@@ -13,5 +16,5 @@ export class LruCache implements Cache {
 
   read = (key: string): Maybe<string> => this._map.get(key) || null;
 
-  write = (key: string, value: string): void => this._map.set(key, value);
+  write = (key: string, value: string): LruMap => this._map.set(key, value);
 }

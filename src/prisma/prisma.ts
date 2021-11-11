@@ -52,7 +52,8 @@ export class Prisma {
 
         Prisma._client[field][action] = async (...args: unknown[]) => {
           const key = JSON.stringify({ field, action, args });
-          const cached = JSON.parse(await this.cache.read(key));
+          const read = await this.cache.read(key);
+          const cached = read ? JSON.parse(read) : null;
 
           if (!cached) {
             const evaluated = await pristine(...args);
