@@ -11,10 +11,6 @@
     "strictNullChecks": true,
     "target": "es5"
   },
-  "include": [
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "./**/*.spec.ts"
-  ]
+  "include": ["./**/*.ts"],
+  "exclude": ["./**/*.spec.ts"]
 }
