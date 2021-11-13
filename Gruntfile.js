@@ -16,10 +16,12 @@ function env(name) {
 const exec = {
   cspell: 'npx cspell ".*" "*" "**/*"',
   eslint: 'npx esw "**/*.{js,ts}" --fix --ignore-path .gitignore',
-  mocha: "npx nyc mocha 'dist/**/*.js' -R mochawesome --exit",
   prettier: 'npx prettier . --write --ignore-path .gitignore --single-quote',
   remark: 'npx remark -r .remarkrc --ignore-path .gitignore . .github',
 
+  mocha: "npx nyc mocha 'dist/**/*.js' -R mochawesome --exit",
+  renameCoverage: 'mv coverage/cobertura-coverage.xml coverage/cobertura.xml',
+  
   prismaGenerate: 'prisma generate --schema ./src/testdb/schema.prisma',
   prismaMigrate: 'prisma migrate dev --schema ./src/testdb/schema.prisma',
 
@@ -92,6 +94,6 @@ module.exports = (grunt) => {
   grunt.registerTask(
     'test',
     'Compile and run unit tests.',
-    cleanExecs(['env:db', 'tscTest', 'mocha'])
+    cleanExecs(['env:db', 'tscTest', 'mocha', 'renameCoverage'])
   );
 };
