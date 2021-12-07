@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./local.d.ts" />
 
-import { Cache, Maybe } from '../main';
+import { Cache, Maybe } from "../main";
 
-import LruMap from 'collections/lru-map';
+import LruMap from "collections/lru-map";
 
 export type Serialized = { key: string; value: string };
 

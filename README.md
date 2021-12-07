@@ -4,17 +4,23 @@ A Prisma client abstraction that simplifies caching.
 
 ## Status
 
-| Source     | Shields                                                                                                                                       |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Project    | ![release][release_shield] ![license][license_shield] ![lines][lines_shield] ![languages][languages_shield]                                   |
-| Health     | ![readthedocs][readthedocs_shield] ![github_review][github_review_shield] ![codacy][codacy_shield] ![codacy_coverage][codacy_coverage_shield] |
-| Publishers | ![npm][npm_shield] ![npm_downloads][npm_downloads_shield]                                                                                     |
-| Repository | ![issues][issues_shield] ![issues_closed][issues_closed_shield] ![pulls][pulls_shield] ![pulls_closed][pulls_closed_shield]                   |
-| Activity   | ![contributors][contributors_shield] ![monthly_commits][monthly_commits_shield] ![last_commit][last_commit_shield]                            |
+| Source     | Shields                                                                                                                                      |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Project    | ![release][release_shield] ![license][license_shield] ![lines][lines_shield] ![languages][languages_shield]                                  |
+| Health     | ![readthedocs][readthedocs_shield] ![github_review][github_review_shield]![codacy][codacy_shield] ![codacy_coverage][codacy_coverage_shield] |
+| Publishers | ![npm][npm_shield] ![npm_downloads][npm_downloads_shield]                                                                                    |
+| Repository | ![issues][issues_shield] ![issues_closed][issues_closed_shield] ![pulls][pulls_shield] ![pulls_closed][pulls_closed_shield]                  |
+| Activity   | ![contributors][contributors_shield] ![monthly_commits][monthly_commits_shield] ![last_commit][last_commit_shield]                           |
+
+## Installing
+
+```bash
+npm i cached-prisma
+```
 
 ## Usage
 
-To implement a cache and divert the prisma client's internals we use readonly singleton instances for the client and cache:
+To implement a cache we need to divert the prisma client's internals so that we can return cached values without hitting the database. To do this we can use readonly singleton instances for the client and cache objects.
 
 ```ts
 import { Prisma } from 'cached-prisma';
@@ -34,7 +40,98 @@ const cache2 = new Prisma().cache;
 cache1 === cache2;
 ```
 
-Caches must implement safe read and write methods:
+The caching mechanism should be configurable. To control the object used for cache storage you can extend the Prisma class:
+
+```ts
+import { LruCache } from 'cached-prisma';
+
+class CustomPrisma extends Prisma {
+  cacheFactory = () => new LruCache(100);
+}
+```
+
+## Minimal example
+
+Create a prisma schema.
+
+```prisma
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+```
+
+Create a database. In this example we create a postgres container. You can switch db, user and password for your environment.
+
+```bash
+docker run --rm -d              \
+  -p 5432:5432                  \
+  -e POSTGRES_DB=db             \
+  -e POSTGRES_USER=user         \
+  -e POSTGRES_PASSWORD=password \
+  postgres:13
+```
+
+Define the DATABASE_URL environment variable mentioned in our prisma schema.
+
+```bash
+export DATABASE_URL=postgresql://user:password@localhost:5432/db
+```
+
+Generate the types for your client.
+
+```bash
+prisma generate
+```
+
+Migrate the database.
+
+```bash
+prisma migrate dev
+```
+
+Now we can create our client:
+
+```ts
+import { Prisma } from 'cached-prisma';
+
+const client = new Prisma().client;
+
+client.user.create({ data: { name: 'Joel' } });
+```
+
+## Advanced concepts
+
+The default cache is a fixed size queue that pops values as it surpasses its maximum length.
+
+```ts
+import LruMap from 'collections/lru-map';
+
+new LruCache(100);
+```
+
+Memcached support is provided out of the box:
+
+```ts
+import { Memcached } from 'cached-prisma';
+
+class CustomPrisma extends Prisma {
+  cacheFactory = () => new Memcached('127.0.0.1:11211', 10);
+}
+```
+
+The second parameter to the Memcached constructor is the storage lifetime of each write in seconds.
+
+Caches implement safe read and write methods:
 
 ```ts
 export type Maybe<T> = T | null;
@@ -49,34 +146,6 @@ export interface AsyncCache {
   write: (key: string, value: string) => Promise<void>;
 }
 ```
-
-To control the caching mechanism you can extend the Prisma class:
-
-```ts
-import { LruCache } from 'cached-prisma';
-
-class CustomPrisma extends Prisma {
-  cacheFactory = () => new LruCache(10);
-}
-```
-
-The default cache is a fixed size queue that pops values as it surpasses its maximum length.
-
-```ts
-new LruCache(100);
-```
-
-Memcached support is provided out of the box:
-
-```ts
-import { Memcached } from 'cached-prisma';
-
-class CustomPrisma extends Prisma {
-  cacheFactory = () => new Memcached('127.0.0.1:11211', 10);
-}
-```
-
-Note that the second parameter to the Memcached constructor is the storage lifetime of each write in seconds.
 
 We cache the following methods which do not mutate state:
 
@@ -98,40 +167,53 @@ After any of the following state mutating methods we flush the cache:
 - updateMany
 - upsert
 
-## Profiling
+## Running locally
 
-If you provision a database and a memcached instance there is a crude performance profiler included as a sanity check:
-
-```ts
-tsc -p profilers
-node dist/profilers/time.js
+```bash
+git clone https://github.com/JoelLefkowitz/cached-prisma.git
 ```
 
-```sh
-1000 prisma reads:
-┌─────────┬─────────────────┬─────────────┐
-│ (index) │        0        │      1      │
-├─────────┼─────────────────┼─────────────┤
-│    0    │ 'Without cache' │ 2.535861637 │
-│    1    │ 'LruMap cache'  │ 0.080468443 │
-│    2    │   'Memcached'   │ 0.032572969 │
-└─────────┴─────────────────┴─────────────┘
-1000 prisma read and writes:
-┌─────────┬─────────────────┬──────────────┐
-│ (index) │        0        │      1       │
-├─────────┼─────────────────┼──────────────┤
-│    0    │ 'Without cache' │ 10.244921313 │
-│    1    │ 'LruMap cache'  │ 10.869037333 │
-│    2    │   'Memcached'   │  9.9422369   │
-└─────────┴─────────────────┴──────────────┘
+To start up a postgres and memcached container:
+
+```bash
+grunt database
+grunt caches
 ```
 
 ## Tests
 
-To run unit tests:
+To run tests:
 
 ```bash
 grunt test
+```
+
+## Profiling
+
+Local performance profilers are included as a sanity check:
+
+```bash
+grunt profile
+```
+
+```bash
+1000 read calls:
+┌───────────────┬─────────────┐
+│    (index)    │   time /s   │
+├───────────────┼─────────────┤
+│ Without cache │ 2.778027378 │
+│ LruMap cache  │ 0.106343917 │
+│   Memcached   │ 0.136733023 │
+└───────────────┴─────────────┘
+
+1000 read and write calls:
+┌───────────────┬────────-─────┐
+│    (index)    │   time /s    │
+├───────────────┼──────────────┤
+│ Without cache │ 11.241554884 │
+│ LruMap cache  │ 18.793905985 │
+│   Memcached   │ 18.799760361 │
+└───────────────┴──────────────┘
 ```
 
 ## Documentation
@@ -170,17 +252,17 @@ bump2version patch
 
 ## Changelog
 
-Please read this repository's [CHANGELOG](CHANGELOG.md) for details on changes that have been made.
+Please read this repository's [changelog](CHANGELOG.md) for details on changes that have been made.
 
 ## Contributing
 
-Please read this repository's guidelines on [CONTRIBUTING](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Please read this repository's guidelines on [contributing](CONTRIBUTING.md) for details on the process for submitting pull requests. Moreover, our [code of conduct](CODE_OF_CONDUCT.md) declares our collaboration standards.
 
 ## Contributors
 
 - **Joel Lefkowitz** - _Initial work_ - [Joel Lefkowitz][author]
 
-[![Buy Me A Coffee][coffee_button]][coffee]
+[![Buy Me A Coffee][coffee_button]][author_coffee]
 
 ## Remarks
 
@@ -188,17 +270,20 @@ Lots of love to the open source community!
 
 ![Be kind][be_kind]
 
-<!-- Public links -->
+<!-- Project links -->
+
+[readthedocs]: https://cached-prisma.readthedocs.io/en/latest/
+
+<!-- External links -->
 
 [semver]: http://semver.org/
 [be_kind]: https://media.giphy.com/media/osAcIGTSyeovPq6Xph/giphy.gif
-[coffee]: https://www.buymeacoffee.com/joellefkowitz
-[coffee_button]: https://cdn.buymeacoffee.com/buttons/default-blue.png
-[readthedocs]: https://cached-prisma.readthedocs.io/en/latest/
 
-<!-- Acknowledgments -->
+<!-- Contributor links -->
 
 [author]: https://github.com/joellefkowitz
+[author_coffee]: https://www.buymeacoffee.com/joellefkowitz
+[coffee_button]: https://cdn.buymeacoffee.com/buttons/default-blue.png
 
 <!-- Project shields -->
 

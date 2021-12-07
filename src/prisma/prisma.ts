@@ -4,8 +4,7 @@ import { LruCache } from '../caches/local';
 import { PrismaClient } from '@prisma/client';
 
 export type Transmutable = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
+  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
 export class Prisma {

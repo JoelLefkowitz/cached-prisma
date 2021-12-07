@@ -35,6 +35,7 @@ __pypackages__/
 .test_report.*
 .tox/
 .venv
+.vscode/*
 .vscode/settings.json
 .webassets-cache
 *.code-workspace
@@ -60,6 +61,16 @@ __pypackages__/
 *.tfstate.backup
 *.tgz
 *$py.class
+/.psa*
+/.psc-package/
+/.psc*
+/.pulp-cache/
+/.purs*
+/.spago
+/bower_components/
+/generated-docs/
+/node_modules/
+/output/
 \__pycache__/
 bazel-out/
 build/

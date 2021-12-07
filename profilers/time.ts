@@ -1,60 +1,40 @@
-import { LruCache, Memcached, Prisma } from '../src/main';
+import { Task, read, readWrite } from './tasks';
 
 import { PrismaClient } from '.prisma/client';
+import { caches } from './caches';
 
-async function profile(
-  client: PrismaClient,
-  work: (client: PrismaClient) => Promise<void>,
-  cycles: number
-): Promise<number> {
+const cycles = 1000;
+
+async function time(client: PrismaClient, task: Task): Promise<number> {
   const time = process.hrtime();
 
   for (let i = 0; i < cycles; i++) {
-    await work(client);
+    await task(client);
   }
 
   const hrtime = process.hrtime(time);
   return hrtime[0] + hrtime[1] / 10 ** 9;
 }
 
-const read = (id: number) => async (client: PrismaClient) => {
-  await client.user.findFirst({ where: { id } });
-};
+const profile = async (title: string, task: Task) =>
+  Promise.all(
+    caches.map(async (i) => ({
+      name: i.name,
+      data: { 'time /s': await time(i.cache, task) },
+    }))
+  ).then((results) => {
+    console.log(title);
+    console.table(
+      results.reduce((acc, x) => ({ ...acc, ...{ [x.name]: x.data } }), {})
+    );
+  });
 
-const readWrite =
-  (id: number, name: string) => async (client: PrismaClient) => {
-    await client.user.findFirst({ where: { id } });
-    await client.user.create({ data: { name } });
-  };
-
-export const run = async (cycles: number): Promise<void> => {
-  class LruCachedPrisma extends Prisma {
-    cacheFactory = () => new LruCache(10);
-  }
-
-  class MemcachedPrisma extends Prisma {
-    cacheFactory = () => new Memcached('127.0.0.1:11211', 10);
-  }
-
-  const standard = new PrismaClient();
-  const lruCached = new LruCachedPrisma().client;
-  const memcached = new MemcachedPrisma().client;
-
-  console.log(`${cycles} prisma reads:`);
-  console.table([
-    ['Without cache', await profile(standard, read(1), cycles)],
-    ['LruMap cache', await profile(lruCached, read(1), cycles)],
-    ['Memcached', await profile(memcached, read(1), cycles)],
-  ]);
-
-  console.log(`${cycles} prisma read and writes:`);
-  console.table([
-    ['Without cache', await profile(standard, readWrite(1, 'test'), cycles)],
-    ['LruMap cache', await profile(lruCached, readWrite(1, 'test'), cycles)],
-    ['Memcached', await profile(memcached, readWrite(1, 'test'), cycles)],
-  ]);
-};
+async function run() {
+  await profile(`${cycles} read calls:`, read(1));
+  await profile(`${cycles} read and write calls:`, readWrite(1, 'test'));
+  process.exit(0);
+}
 
 if (typeof require !== 'undefined' && require.main === module) {
-  run(1000);
+  run();
 }

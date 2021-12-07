@@ -1,10 +1,10 @@
-import { LruCache } from '../caches/local';
-import { Memcached } from '../caches/memcached';
-import { Prisma } from './prisma';
-import { expect } from 'chai';
+import { LruCache } from "../caches/local";
+import { Memcached } from "../caches/memcached";
+import { Prisma } from "./prisma";
+import { expect } from "chai";
 
 const singletonClient = <T extends typeof Prisma>(cls: T) =>
-  it('has a shared client instance.', () => {
+  it("has a shared client instance.", () => {
     const client1 = new cls().client;
     const client2 = new cls().client;
 
@@ -12,7 +12,7 @@ const singletonClient = <T extends typeof Prisma>(cls: T) =>
   });
 
 const singletonCache = <T extends typeof Prisma>(cls: T) =>
-  it('has a shared cache instance.', () => {
+  it("has a shared cache instance.", () => {
     const cache1 = new cls().cache;
     const cache2 = new cls().cache;
 
@@ -20,17 +20,17 @@ const singletonCache = <T extends typeof Prisma>(cls: T) =>
   });
 
 const cachesResults = <T extends typeof Prisma>(cls: T) =>
-  it('caches results.', async () => {
+  it("caches results.", async () => {
     const prisma = new cls();
 
-    const user = await prisma.client.user.create({ data: { name: 'test' } });
+    const user = await prisma.client.user.create({ data: { name: "test" } });
     await prisma.client.user.findFirst({ where: { id: user.id } });
 
     expect(
       prisma.cache.read(
         JSON.stringify({
-          field: 'user',
-          action: 'findFirst',
+          field: "user",
+          action: "findFirst",
           args: [{ where: { id: user.id } }],
         })
       )
@@ -38,18 +38,18 @@ const cachesResults = <T extends typeof Prisma>(cls: T) =>
   });
 
 const flushesResults = <T extends typeof Prisma>(cls: T) =>
-  it('flushes the cache after mutations.', async () => {
+  it("flushes the cache after mutations.", async () => {
     const prisma = new cls();
 
-    const user = await prisma.client.user.create({ data: { name: 'test' } });
+    const user = await prisma.client.user.create({ data: { name: "test" } });
     await prisma.client.user.findFirst({ where: { id: user.id } });
-    await prisma.client.user.create({ data: { name: 'test' } });
+    await prisma.client.user.create({ data: { name: "test" } });
 
     expect(
       prisma.cache.read(
         JSON.stringify({
-          field: 'user',
-          action: 'findFirst',
+          field: "user",
+          action: "findFirst",
           args: [{ where: { id: user.id } }],
         })
       )
@@ -64,18 +64,18 @@ const testCacheBehaviors = <T extends typeof Prisma>(name: string, cls: T) =>
     flushesResults(cls);
   });
 
-testCacheBehaviors('Prisma BaseClass', Prisma);
+testCacheBehaviors("Prisma BaseClass", Prisma);
 
 testCacheBehaviors(
-  'Extensible with LruCache',
+  "Extensible with LruCache",
   class extends Prisma {
     cacheFactory = () => new LruCache(10);
   }
 );
 
 testCacheBehaviors(
-  'Extensible with Memcached',
+  "Extensible with Memcached",
   class extends Prisma {
-    cacheFactory = () => new Memcached('127.0.0.1:11211', 10);
+    cacheFactory = () => new Memcached("127.0.0.1:11211", 10);
   }
 );

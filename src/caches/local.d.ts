@@ -1,4 +1,4 @@
-declare module 'collections/lru-map' {
+declare module "collections/lru-map" {
   class LruMap {
     constructor(values: Record<string, string>, maxLength: number);
 

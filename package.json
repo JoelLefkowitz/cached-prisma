@@ -1,19 +1,12 @@
 {
   "name": "cached-prisma",
-  "version": "0.1.0",
+  "version": "1.1.1",
   "description": "A Prisma client abstraction that simplifies caching.",
   "repository": "https://github.com/JoelLefkowitz/infer-version.git",
-  "author": "joellefkowitz",
+  "author": "Joel Lefkowitz",
   "license": "MIT",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
-  "keywords": [
-    "Prisma",
-    "Memcached",
-    "cache",
-    "client",
-    "singleton"
-  ],
   "scripts": {
     "prepublish": "grunt build"
   },
@@ -34,28 +27,29 @@
     "@typescript-eslint/parser": "^4.28.3",
     "chai": "^4.3.4",
     "cspell": "^5.6.6",
+    "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-watch": "^7.0.0",
-    "eslint": "^7.30.0",
+    "grunt": "^1.4.1",
     "grunt-cli": "^1.4.3",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-env": "^1.0.1",
     "grunt-exec": "^3.0.0",
-    "grunt": "^1.4.1",
-    "mocha-param": "^2.0.1",
+    "hashed-env": "^1.0.0",
     "mocha": "^9.0.2",
+    "mocha-param": "^2.0.1",
     "mochawesome": "^7.0.1",
     "nyc": "^15.1.0",
     "prettier": "^2.3.2",
-    "prisma-cli": "^1.0.9",
     "prisma": "^2.28.0",
+    "prisma-cli": "^1.0.9",
     "quick-grunt": "^0.2.0",
     "remark-cli": "^9.0.0",
     "remark-lint": "^8.0.0",
     "remark-preset-lint-recommended": "^5.0.0",
     "source-map-support": "^0.5.19",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "why-is-node-running": "^2.2.0"
   }
 }

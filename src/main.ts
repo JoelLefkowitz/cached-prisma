@@ -1,6 +1,6 @@
-export { Prisma } from './prisma/prisma';
-export { LruCache } from './caches/local';
-export { Memcached } from './caches/memcached';
+export { Prisma } from "./prisma/prisma";
+export { LruCache } from "./caches/local";
+export { Memcached } from "./caches/memcached";
 
 export type Maybe<T> = T | null;
 
@@ -15,21 +15,21 @@ export interface AsyncCache {
 }
 
 export const PureActions = [
-  'aggregate',
-  'count',
-  'findFirst',
-  'findMany',
-  'findUnique',
-  'queryRaw',
+  "aggregate",
+  "count",
+  "findFirst",
+  "findMany",
+  "findUnique",
+  "queryRaw",
 ];
 
 export const ImpureActions = [
-  'create',
-  'createMany',
-  'delete',
-  'deleteMany',
-  'executeRaw',
-  'update',
-  'updateMany',
-  'upsert',
+  "create",
+  "createMany",
+  "delete",
+  "deleteMany",
+  "executeRaw",
+  "update",
+  "updateMany",
+  "upsert",
 ];

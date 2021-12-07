@@ -1,25 +1,30 @@
-output: .
-
 collections:
   - common
   - typescript
 
 excludes:
   - .cspell.json
-  - .github/workflows/review.yml
-  - Gruntfile.js
-  - package.json
   - README.md
+  - package.json
+  - Gruntfile.js
+  - .github/workflows/review.yml
 
 render_context:
-  name: cached-prisma
-  description: A Prisma client abstraction that simplifies caching.
-  version: 1.1.1
-  author: joellefkowitz
-  codacy_id: 00658bb866d6482184b86d16d3ce5ae8
-  keywords:
-    - Prisma
-    - Memcached
-    - cache
-    - client
-    - singleton
+  project:
+    name: cached-prisma
+    description: A Prisma client abstraction that simplifies caching.
+    version: 1.1.1
+    verbose_name: Cached Prisma
+    repository: https://github.com/JoelLefkowitz/cached-prisma
+    codacy_id: 00658bb866d6482184b86d16d3ce5ae8
+
+  author:
+    author: joellefkowitz
+    author_email: joellefkowitz@hotmail.com
+    verbose_author: Joel Lefkowitz
+
+clear_top_level: true
+logical_grouping: true
+
+loader_paths:
+  - docs
