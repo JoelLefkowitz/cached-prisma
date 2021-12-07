@@ -13,7 +13,7 @@ render_context:
   project:
     name: cached-prisma
     description: A Prisma client abstraction that simplifies caching.
-    version: 1.1.1
+    version: 1.2.0
     verbose_name: Cached Prisma
     repository: https://github.com/JoelLefkowitz/cached-prisma
     codacy_id: 00658bb866d6482184b86d16d3ce5ae8
