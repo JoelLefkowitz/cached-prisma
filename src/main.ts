@@ -1,6 +1,7 @@
 export { Prisma } from "./prisma/prisma";
 export { LruCache } from "./caches/local";
 export { Memcached } from "./caches/memcached";
+export { Redis } from "./caches/redis";
 
 export type Maybe<T> = T | null;
 

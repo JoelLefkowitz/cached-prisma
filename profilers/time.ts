@@ -1,7 +1,7 @@
-import { Task, read, readWrite } from './tasks';
+import { Task, read, readWrite } from "./tasks";
 
-import { PrismaClient } from '.prisma/client';
-import { caches } from './caches';
+import { PrismaClient } from ".prisma/client";
+import { caches } from "./caches";
 
 const cycles = 1000;
 
@@ -20,7 +20,7 @@ const profile = async (title: string, task: Task) =>
   Promise.all(
     caches.map(async (i) => ({
       name: i.name,
-      data: { 'time /s': await time(i.cache, task) },
+      data: { "time /s": await time(i.cache, task) },
     }))
   ).then((results) => {
     console.log(title);
@@ -31,10 +31,10 @@ const profile = async (title: string, task: Task) =>
 
 async function run() {
   await profile(`${cycles} read calls:`, read(1));
-  await profile(`${cycles} read and write calls:`, readWrite(1, 'test'));
+  await profile(`${cycles} read and write calls:`, readWrite(1, "test"));
   process.exit(0);
 }
 
-if (typeof require !== 'undefined' && require.main === module) {
+if (typeof require !== "undefined" && require.main === module) {
   run();
 }

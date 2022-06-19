@@ -44,9 +44,9 @@ jobs:
 
       - name: Run unit tests
         run: |
-           grunt database
-           grunt caches
-           grunt test
+          grunt database
+          grunt caches
+          grunt test
 
       - name: Report unit test coverage
         uses: codacy/codacy-coverage-reporter-action@v1

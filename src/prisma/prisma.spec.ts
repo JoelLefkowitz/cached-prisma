@@ -79,3 +79,10 @@ testCacheBehaviors(
     cacheFactory = () => new Memcached("127.0.0.1:11211", 10);
   }
 );
+
+testCacheBehaviors(
+  "Extensible with Redis",
+  class extends Prisma {
+    cacheFactory = () => new Redis("redis://127.0.0.1:6379", 10);
+  }
+);

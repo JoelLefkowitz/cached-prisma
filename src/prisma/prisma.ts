@@ -1,7 +1,6 @@
-import { AsyncCache, Cache, ImpureActions, PureActions } from '../main';
-
-import { LruCache } from '../caches/local';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
+import { LruCache } from "../caches/local";
+import { AsyncCache, Cache, ImpureActions, PureActions } from "../main";
 
 export type Transmutable = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -37,7 +36,7 @@ export class Prisma {
 
   get publicClientMethods(): string[] {
     return Object.getOwnPropertyNames(Prisma._client).filter(
-      (property: string) => !property.startsWith('_')
+      (property: string) => !property.startsWith("_")
     );
   }
 

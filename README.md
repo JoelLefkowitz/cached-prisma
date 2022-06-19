@@ -23,7 +23,7 @@ npm i cached-prisma
 To implement a cache we need to divert the prisma client's internals so that we can return cached values without hitting the database. To do this we can use readonly singleton instances for the client and cache objects.
 
 ```ts
-import { Prisma } from 'cached-prisma';
+import { Prisma } from "cached-prisma";
 
 const client1 = new Prisma().client;
 const client2 = new Prisma().client;
@@ -32,7 +32,7 @@ client1 === client2;
 ```
 
 ```ts
-import { Prisma } from 'cached-prisma';
+import { Prisma } from "cached-prisma";
 
 const cache1 = new Prisma().cache;
 const cache2 = new Prisma().cache;
@@ -43,7 +43,7 @@ cache1 === cache2;
 The caching mechanism should be configurable. To control the object used for cache storage you can extend the Prisma class:
 
 ```ts
-import { LruCache } from 'cached-prisma';
+import { LruCache } from "cached-prisma";
 
 class CustomPrisma extends Prisma {
   cacheFactory = () => new LruCache(100);
@@ -102,11 +102,11 @@ prisma migrate dev
 Now we can create our client:
 
 ```ts
-import { Prisma } from 'cached-prisma';
+import { Prisma } from "cached-prisma";
 
 const client = new Prisma().client;
 
-client.user.create({ data: { name: 'Joel' } });
+client.user.create({ data: { name: "Joel" } });
 ```
 
 ## Advanced concepts
@@ -114,7 +114,7 @@ client.user.create({ data: { name: 'Joel' } });
 The default cache is a fixed size queue that pops values as it surpasses its maximum length.
 
 ```ts
-import LruMap from 'collections/lru-map';
+import LruMap from "collections/lru-map";
 
 new LruCache(100);
 ```
@@ -122,10 +122,10 @@ new LruCache(100);
 Memcached support is provided out of the box:
 
 ```ts
-import { Memcached } from 'cached-prisma';
+import { Memcached } from "cached-prisma";
 
 class CustomPrisma extends Prisma {
-  cacheFactory = () => new Memcached('127.0.0.1:11211', 10);
+  cacheFactory = () => new Memcached("127.0.0.1:11211", 10);
 }
 ```
 
