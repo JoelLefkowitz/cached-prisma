@@ -51,5 +51,19 @@
     "source-map-support": "^0.5.19",
     "typescript": "^4.3.5",
     "why-is-node-running": "^2.2.0"
+  },
+  "metadata": {
+    "documentation": "https://cached-prisma.readthedocs.io/en/latest",
+    "languages": [
+      "TypeScript"
+    ],
+    "frameworks": [
+        "Prisma"
+    ],
+    "paradigms": [
+      "Object oriented"
+    ],
+    "lifecycle": "Alpha",
+    "publisher": "npm"
   }
 }
