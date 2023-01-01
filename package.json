@@ -54,11 +54,12 @@
   },
   "metadata": {
     "documentation": "https://cached-prisma.readthedocs.io/en/latest",
+    "packages": "https://npmjs.com/package/cached-prisma",
     "languages": [
       "TypeScript"
     ],
     "frameworks": [
-        "Prisma"
+      "Prisma"
     ],
     "paradigms": [
       "Object oriented"
