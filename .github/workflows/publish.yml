@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "*.*.*"
 
 jobs:
   publish:
@@ -11,34 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Fetch yarn's cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Set up yarn package caching
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Set the node version
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Checkout the source code
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: |
-          yarn install --frozen-lockfile
-          yarn global add grunt-cli
+        uses: ./.github/actions/install
 
-      - name: Compile the package for publishing
-        run: grunt build
+      - name: Build the package
+        run: nps build
 
       - uses: JS-DevTools/npm-publish@v1
         with:

@@ -1,26 +1,31 @@
-import { Task, read, readWrite } from './tasks';
+import { Task, read, readWrite } from "./tasks";
 
-import { PrismaClient } from '.prisma/client';
-import { caches } from './caches';
+import { PrismaClient } from ".prisma/client";
+import { caches } from "./caches";
 
 const cycles = 1000;
 
-async function time(client: PrismaClient, task: Task): Promise<number> {
+export const time = async (
+  client: PrismaClient,
+  task: Task
+): Promise<number> => {
   const time = process.hrtime();
 
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < cycles; i++) {
+    // eslint-disable-next-line no-await-in-loop
     await task(client);
   }
 
   const hrtime = process.hrtime(time);
   return hrtime[0] + hrtime[1] / 10 ** 9;
-}
+};
 
 const profile = async (title: string, task: Task) =>
   Promise.all(
     caches.map(async (i) => ({
       name: i.name,
-      data: { 'time /s': await time(i.cache, task) },
+      data: { "time /s": await time(i.cache, task) },
     }))
   ).then((results) => {
     console.log(title);
@@ -29,12 +34,12 @@ const profile = async (title: string, task: Task) =>
     );
   });
 
-async function run() {
+export const run = async (): Promise<void> => {
   await profile(`${cycles} read calls:`, read(1));
-  await profile(`${cycles} read and write calls:`, readWrite(1, 'test'));
+  await profile(`${cycles} read and write calls:`, readWrite(1, "test"));
   process.exit(0);
-}
+};
 
-if (typeof require !== 'undefined' && require.main === module) {
+if (typeof require !== "undefined" && require.main === module) {
   run();
 }

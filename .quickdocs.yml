@@ -1,7 +1,6 @@
 project: cached-prisma
-version: 1.2.0
+version: 0.1.4
 author: Joel Lefkowitz
 verbose_name: Cached Prisma
 html_title: Cached Prisma
 github_url: https://github.com/JoelLefkowitz/cached-prisma
-apidoc_module_dir: src

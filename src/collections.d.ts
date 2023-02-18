@@ -4,6 +4,7 @@ declare module "collections/lru-map" {
 
     get<T>(key: string, defaultValue?: T): T;
     set<T>(key: string, defaultValue?: T): LruMap;
+    clear(): void;
   }
 
   export default LruMap;

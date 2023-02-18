@@ -9,7 +9,7 @@ sys.path.append("..")
     Sphinx core settings
 """
 project = "cached-prisma"
-version = "1.2.0"
+version = "0.1.4"
 author = "Joel Lefkowitz"
 master_doc = "index"
 

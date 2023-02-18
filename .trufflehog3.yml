@@ -1,0 +1,27 @@
+severity: low
+exclude:
+  - message: Codacy project public id
+    pattern: 00658bb866d6482184b86d16d3ce5ae8
+
+  - message: Sourcemaps
+    pattern: sourceMappingURL=data:application/json;base64,
+
+  - message: Example postgresql connection string
+    pattern: postgresql://user:password@localhost:5432/db
+    paths:
+      - .github/workflows/review.yml
+      - .vscode/launch.json
+      - README.md
+
+  - message: Example postgresql password environment variable
+    pattern: POSTGRES_PASSWORD=password
+    paths:
+      - README.md
+
+  - message: Dependencies
+    paths:
+      - package-lock.json
+      - node_modules
+      - venv
+      - yarn-error.log
+      - yarn.lock

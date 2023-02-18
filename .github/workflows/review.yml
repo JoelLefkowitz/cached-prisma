@@ -5,52 +5,42 @@ on: [push, pull_request]
 jobs:
   review:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [12, 14, 16]
+        node-version: [12, 14, 16, 18]
 
     steps:
-      - name: Fetch yarn's cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Set up yarn package caching
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Set the node version
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Checkout the source code
         uses: actions/checkout@v2
 
       - name: Install dependencies
-        run: |
-          yarn install --frozen-lockfile
-          yarn global add grunt-cli
-          yarn global add ts-node
-          yarn global add prisma
+        uses: ./.github/actions/install
+        with:
+          node-version: ${{ matrix.node-version }}
 
       - name: Run linters
-        run: grunt lint
+        run: nps lint
 
-      - name: Run unit tests
+      - name: Launch a postgres instance
         run: |
-           grunt database
-           grunt caches
-           grunt test
+          docker run -d 
+            -p 11211:11211
+            memcached:1.6.9
 
-      - name: Report unit test coverage
+      - name: Launch a memcached instance
+        run: |
+          docker run -d
+            -p 5433:5432                  
+            -e POSTGRES_DB=db             
+            -e POSTGRES_USER=user         
+            -e POSTGRES_PASSWORD=password 
+            postgres:13
+
+      - name: Run tests
+        run: DATABASE_URL=postgresql://user:password@localhost:5432/db nps test
+
+      - name: Publish test coverage
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/cobertura.xml
-        if: ${{ matrix.node == 16 }}
+          coverage-reports: ./coverage/lcov.info

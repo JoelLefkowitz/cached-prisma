@@ -2,20 +2,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug tests",
       "type": "node",
       "request": "launch",
-      "name": "Debug src",
-      "program": "${workspaceFolder}/src/main.ts",
-      "preLaunchTask": "grunt: build",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "console": "integratedTerminal",
+      "env": {
+        "DATABASE_URL": "postgresql://user:password@localhost:5432/db"
+      }
     },
     {
+      "name": "Debug entrypoint",
       "type": "node",
       "request": "launch",
-      "name": "Debug tests",
-      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
-      "args": ["dist/**/*.js"],
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "args": ["${workspaceFolder}/src/main.ts"],
+      "console": "integratedTerminal"
     }
   ]
 }
