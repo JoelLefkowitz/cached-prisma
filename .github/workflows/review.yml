@@ -25,6 +25,8 @@ jobs:
         run: |
           docker run -d -p 5432:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres:13
           npx prisma migrate dev --schema ./prisma/schema.prisma
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/db
 
       - name: Launch a memcached instance
         run: docker run -d  -p 11211:11211 memcached:1.6.9
