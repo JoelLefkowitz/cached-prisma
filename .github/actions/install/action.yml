@@ -14,7 +14,7 @@ runs:
   using: composite
   steps:
     - name: Checkout the source code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Fetch yarn's cache directory path
       id: yarn-cache-dir-path
@@ -22,7 +22,7 @@ runs:
       run: echo "::set-output name=dir::$(yarn cache dir)"
 
     - name: Set up yarn package caching
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -31,19 +31,19 @@ runs:
           ${{ runner.os }}-yarn-
 
     - name: Set up pip package caching
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: ${{ runner.os }}-pip-
 
     - name: Set the node version
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
 
     - name: Set the python version
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ inputs.python-version }}
 
