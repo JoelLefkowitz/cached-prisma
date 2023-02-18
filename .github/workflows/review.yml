@@ -25,9 +25,8 @@ jobs:
         run: docker run -d  -p 11211:11211 memcached:1.6.9
 
       - name: Launch a memcached instance
-        run: >
-          docker run -d -p 5433:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user \
-          -e POSTGRES_PASSWORD=password postgres:13
+        run: |
+          docker run -d -p 5433:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres:13
 
       - name: Run tests
         run: DATABASE_URL=postgresql://user:password@localhost:5432/db nps test
