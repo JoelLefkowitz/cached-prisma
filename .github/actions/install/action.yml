@@ -43,7 +43,7 @@ runs:
         node-version: ${{ inputs.node-version }}
 
     - name: Set the python version
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ inputs.python-version }}
 
