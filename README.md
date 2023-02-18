@@ -175,7 +175,7 @@ git clone https://github.com/JoelLefkowitz/cached-prisma.git
 
 To start up a postgres and memcached container:
 
-```bash 
+```bash
 docker run --rm -d              \
   -p 5432:5432                  \
   -e POSTGRES_DB=db             \
@@ -183,7 +183,7 @@ docker run --rm -d              \
   -e POSTGRES_PASSWORD=password \
   postgres:13
 
-docker run -d --rm -p 11211:11211 memcached:1.6.9 
+docker run -d --rm -p 11211:11211 memcached:1.6.9
 ```
 
 ## Tests
