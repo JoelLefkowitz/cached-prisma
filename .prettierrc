@@ -1,4 +1,4 @@
 {
   "quoteProps": "consistent",
-  "proseWrap": "always"
+  "proseWrap": "preserve"
 }

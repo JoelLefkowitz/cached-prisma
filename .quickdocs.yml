@@ -3,4 +3,4 @@ version: 1.2.1
 author: Joel Lefkowitz
 verbose_name: Cached Prisma
 html_title: Cached Prisma
-github_url: https://github.com/JoelLefkowitz/cached-prisma
+github_url: https://github.com/joellefkowitz/cached-prisma

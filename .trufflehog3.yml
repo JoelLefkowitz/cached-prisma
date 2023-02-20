@@ -6,6 +6,9 @@ exclude:
   - message: Sourcemaps
     pattern: sourceMappingURL=data:application/json;base64,
 
+  - message: Giphy links
+    pattern: https://media.giphy.com/media/
+
   - message: Example postgresql connection string
     pattern: postgresql://user:password@localhost:5432/db
     paths:

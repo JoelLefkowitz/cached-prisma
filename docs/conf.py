@@ -9,7 +9,7 @@ sys.path.append("..")
     Sphinx core settings
 """
 project = "cached-prisma"
-version = "1.2.0"
+version = "1.2.1"
 author = "Joel Lefkowitz"
 master_doc = "index"
 
@@ -47,7 +47,7 @@ napoleon_google_docstring = True
 html_theme = "yummy_sphinx_theme"
 html_theme_options = {
     "navbar_icon": "spin fa-book",
-    "github_url": "https://github.com/JoelLefkowitz/cached-prisma"
+    "github_url": "https://github.com/joellefkowitz/cached-prisma"
 }
 
 """
