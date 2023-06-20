@@ -11,6 +11,7 @@
     "dist"
   ],
   "scripts": {
+    "start": "nps",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -33,6 +34,7 @@
     "eslint-plugin-import": "^2.27.5",
     "husky": "^8.0.3",
     "jest": "28.1.1",
+    "jest-date-mock": "^1.0.8",
     "nps": "^5.10.0",
     "nps-utils": "^1.7.0",
     "prettier": "^2.6.2",

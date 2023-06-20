@@ -2102,6 +2102,7 @@ __metadata:
     husky: ^8.0.3
     ioredis: ^5.3.2
     jest: 28.1.1
+    jest-date-mock: ^1.0.8
     memcached: ^2.2.2
     nps: ^5.10.0
     nps-utils: ^1.7.0
@@ -4474,6 +4475,13 @@ __metadata:
     ts-node:
       optional: true
   checksum: ddabffd3a3a8cb6c2f58f06cdf3535157dbf8c70bcde3e5c3de7bee6a8d617840ffc8cffb0083e38c6814f2a08c225ca19f58898efaf4f351af94679f22ce6bc
+  languageName: node
+  linkType: hard
+
+"jest-date-mock@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "jest-date-mock@npm:1.0.8"
+  checksum: 7b012870440b0df742d0b651435b91625dbbf02d916633a0c70c7deb5d5087f9aadc59847602312368826325909e70e95cd412896a0c9ee1d5ac382000bf5ef9
   languageName: node
   linkType: hard
 

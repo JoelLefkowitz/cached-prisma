@@ -7,5 +7,5 @@ export const caches = [
   { name: "Without cache", cache: new PrismaClient() },
   { name: "LruMap cache", cache: new Prisma().client },
   { name: "Memcached", cache: new MemcachedPrisma().client },
-  { name: "Redis", cache: new RedisPrisma().client },
+  { name: "Redis cache", cache: new RedisPrisma().client },
 ];
