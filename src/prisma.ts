@@ -11,6 +11,7 @@ export interface Cache {
 export interface SingletonClient {
   cache?: Cache;
   client?: PrismaClient;
+  logger?: unknown;
 }
 
 export const PureActions = [
@@ -41,6 +42,7 @@ export class Prisma {
   logger?: Console;
 
   constructor(logger?: Console) {
+    logger?.log("new prisma instance");
     this.logger = logger;
     if (!Prisma.singleton.cache) {
       this.logger?.warn("DB Caching is enabled");
@@ -95,5 +97,9 @@ export class Prisma {
     }
 
     return client;
+  }
+
+  protected setLogger(logger?: Console): void {
+    this.logger = logger;
   }
 }

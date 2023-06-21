@@ -42,6 +42,7 @@
     "camelcase",
     "codacy",
     "datasource",
+    "dbcache",
     "esbenp",
     "fmarkdown",
     "genindex",

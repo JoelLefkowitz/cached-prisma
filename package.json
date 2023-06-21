@@ -15,11 +15,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@prisma/client": "^4.10.1",
-    "collections": "^5.1.12",
+    "@prisma/client": "^4.16.0",
+    "collections": "^5.1.13",
     "ioredis": "^5.3.2",
     "memcached": "^2.2.2",
-    "prisma": "^4.10.1"
+    "prisma": "^4.16.0"
   },
   "devDependencies": {
     "@types/collections": "^5.1.2",
