@@ -1,7 +1,7 @@
 {
-  "name": "cached-prisma",
+  "name": "@mahhoura/cached-prisma",
   "description": "A Prisma client abstraction that simplifies caching.",
-  "version": "1.2.1",
+  "version": "1.4.0",
   "repository": "https://github.com/joellefkowitz/cached-prisma",
   "homepage": "https://cached-prisma.readthedocs.io",
   "author": "Joel Lefkowitz",
@@ -11,13 +11,15 @@
     "dist"
   ],
   "scripts": {
+    "start": "nps",
     "prepare": "husky install"
   },
   "dependencies": {
-    "@prisma/client": "^4.10.1",
-    "collections": "^5.1.12",
+    "@prisma/client": "^4.16.0",
+    "collections": "^5.1.13",
+    "ioredis": "^5.3.2",
     "memcached": "^2.2.2",
-    "prisma": "^4.10.1"
+    "prisma": "^4.16.0"
   },
   "devDependencies": {
     "@types/collections": "^5.1.2",
@@ -27,13 +29,14 @@
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.36.1",
     "cspell": "^6.26.3",
+    "eslint": "~8.34.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint": "~8.34.0",
     "husky": "^8.0.3",
     "jest": "28.1.1",
-    "nps-utils": "^1.7.0",
+    "jest-date-mock": "^1.0.8",
     "nps": "^5.10.0",
+    "nps-utils": "^1.7.0",
     "prettier": "^2.6.2",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
