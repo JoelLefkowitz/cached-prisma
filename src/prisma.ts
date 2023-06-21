@@ -38,23 +38,26 @@ export class Prisma {
 
   cache: Cache;
   client: PrismaClient;
+  logger?: Console;
 
-  constructor() {
+  constructor(logger?: Console) {
+    this.logger = logger;
     if (!Prisma.singleton.cache) {
+      this.logger?.warn("DB Caching is enabled");
       Prisma.singleton.cache = Prisma.cacheFactory();
     }
 
     if (!Prisma.singleton.client) {
-      Prisma.singleton.client = Prisma.clientFactory();
+      Prisma.singleton.client = Prisma.clientFactory(this.logger);
     }
 
     this.client = Prisma.singleton.client;
     this.cache = Prisma.singleton.cache;
   }
 
-  static cacheFactory = (): Cache => new LruCache(100);
+  static cacheFactory = (_params?: unknown): Cache => new LruCache(100);
 
-  private static clientFactory(): PrismaClient {
+  private static clientFactory(logger?: Console): PrismaClient {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const client = new PrismaClient() as any;
 
@@ -63,6 +66,7 @@ export class Prisma {
         !property.startsWith("$") && !property.startsWith("_")
     )) {
       for (const action of ImpureActions) {
+        logger?.debug(`${field}.${action}: cache flush.`);
         const pristine = client[field][action];
 
         client[field][action] = (...args: unknown[]) => {
@@ -79,9 +83,10 @@ export class Prisma {
           const cached = await Prisma.singleton.cache?.read(key);
 
           if (cached) {
+            logger?.debug(`Cache hit for ${key}`);
             return JSON.parse(cached);
           }
-
+          logger?.debug(`Cache miss for ${key}`);
           const evaluated = await pristine(...args);
           await Prisma.singleton.cache?.write(key, JSON.stringify(evaluated));
           return evaluated;
