@@ -2,14 +2,32 @@
   "name": "cached-prisma",
   "description": "A Prisma client abstraction that simplifies caching.",
   "version": "1.2.1",
-  "repository": "https://github.com/joellefkowitz/cached-prisma",
-  "homepage": "https://cached-prisma.readthedocs.io",
-  "author": "Joel Lefkowitz",
+  "private": false,
   "license": "MIT",
+  "author": "Joel Lefkowitz",
+  "repository": "https://github.com/joellefkowitz/cached-prisma",
+  "homepage": "https://joellefkowitz.github.io/cached-prisma",
   "main": "dist/index.js",
   "files": [
     "dist"
   ],
+  "keywords": [
+    "prisma",
+    "caching"
+  ],
+  "metadata": {
+    "publisher": "npm",
+    "languages": [
+      "TypeScript"
+    ],
+    "frameworks": [
+      "Prisma"
+    ],
+    "paradigms": [
+      "Object oriented"
+    ],
+    "lifecycle": "Beta"
+  },
   "scripts": {
     "prepare": "husky install"
   },
@@ -39,20 +57,5 @@
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
     "typescript": "^4.8.4"
-  },
-  "metadata": {
-    "documentation": "https://cached-prisma.readthedocs.io",
-    "packages": "https://npmjs.com/package/cached-prisma",
-    "languages": [
-      "TypeScript"
-    ],
-    "frameworks": [
-      "Prisma"
-    ],
-    "paradigms": [
-      "Object oriented"
-    ],
-    "lifecycle": "Alpha",
-    "publisher": "npm"
   }
 }
