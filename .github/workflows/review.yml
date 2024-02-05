@@ -13,7 +13,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Run linters
-        run: nps lint
+        run: npm run lint
 
       - name: Launch a postgres instance
         run: |
@@ -26,7 +26,7 @@ jobs:
         run: docker run -d  -p 11211:11211 memcached:1.6.9
 
       - name: Run tests
-        run: nps test
+        run: npm run test
         env:
           DATABASE_URL: postgresql://user:password@localhost:5432/db
 
