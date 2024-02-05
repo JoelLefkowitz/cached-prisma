@@ -41,4 +41,8 @@ export class Memcached implements Cache {
       });
     });
   }
+
+  close(): void {
+    this.client.end();
+  }
 }

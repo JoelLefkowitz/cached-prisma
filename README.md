@@ -20,7 +20,27 @@ Documentation and more detailed examples are hosted on [Github Pages](https://jo
 
 ## Usage
 
-To implement a cache we need to divert the prisma client's internals so that we
+```ts
+client.user.create({ data: { name: "Joel" } });
+
+// This populates the cache
+client.user.findFirst({ where: { name: "Joel" } });
+
+// This is retrieved from the cache
+client.user.findFirst({ where: { name: "Joel" } });
+```
+
+To control the object used for cache storage you can extend the Prisma class:
+
+```ts
+import { LruCache } from "cached-prisma";
+
+class CustomPrisma extends Prisma {
+  static override cacheFactory = () => new LruCache(100);
+}
+```
+
+To implement the cache we need to divert the prisma client's internals so that we
 can return cached values without hitting the database. To do this we can use a
 singleton instance for the client and cache objects.
 
@@ -40,17 +60,6 @@ const cache1 = new Prisma().cache;
 const cache2 = new Prisma().cache;
 
 cache1 === cache2;
-```
-
-The caching mechanism should be configurable. To control the object used for
-cache storage you can extend the Prisma class:
-
-```ts
-import { LruCache } from "cached-prisma";
-
-class CustomPrisma extends Prisma {
-  static override cacheFactory = () => new LruCache(100);
-}
 ```
 
 ## Minimal example
