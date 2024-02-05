@@ -7,9 +7,7 @@ on:
 
 jobs:
   publish:
-    name: Publish the package on npm
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout the source code
         uses: actions/checkout@v3
@@ -18,7 +16,7 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Build the package
-        run: nps build
+        run: npm run build
 
       - uses: JS-DevTools/npm-publish@v1
         with:

@@ -7,12 +7,8 @@ about: Suggest a feature
 
 ## Description
 
-<!-- edit: --> A clear and concise description of the problem or missing capability...
+...
 
-## Describe the solution you'd like
+## Alternatives
 
-<!-- edit: --> If you have a solution in mind, please describe it.
-
-## Describe alternatives you've considered
-
-<!-- edit: --> Have you considered any alternative solutions or workarounds?
+...

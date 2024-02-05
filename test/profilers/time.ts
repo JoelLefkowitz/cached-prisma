@@ -7,7 +7,7 @@ const cycles = 1000;
 
 export const time = async (
   client: PrismaClient,
-  task: Task
+  task: Task,
 ): Promise<number> => {
   const time = process.hrtime();
 
@@ -26,11 +26,11 @@ const profile = async (title: string, task: Task) =>
     caches.map(async (i) => ({
       name: i.name,
       data: { "time /s": await time(i.cache, task) },
-    }))
+    })),
   ).then((results) => {
     console.log(title);
     console.table(
-      results.reduce((acc, x) => ({ ...acc, ...{ [x.name]: x.data } }), {})
+      results.reduce((acc, x) => ({ ...acc, ...{ [x.name]: x.data } }), {}),
     );
   });
 

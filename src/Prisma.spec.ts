@@ -27,8 +27,8 @@ describe("Prisma", () => {
           field: "user",
           action: "findFirst",
           args: [{ where: { id: user.id } }],
-        })
-      )
+        }),
+      ),
     ).toEqual(JSON.stringify(user));
   });
 
@@ -45,8 +45,8 @@ describe("Prisma", () => {
           field: "user",
           action: "findFirst",
           args: [{ where: { id: user.id } }],
-        })
-      )
+        }),
+      ),
     ).toBeNull();
   });
 });

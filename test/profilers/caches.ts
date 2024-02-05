@@ -1,4 +1,4 @@
-import { Memcached, Prisma } from "../src";
+import { Memcached, Prisma } from "../../src";
 
 import { PrismaClient } from ".prisma/client";
 

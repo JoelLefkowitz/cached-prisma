@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 import { LruCache } from "./LruCache";
 import { PrismaClient } from "@prisma/client";
 
@@ -56,11 +55,11 @@ export class Prisma {
 
   private static clientFactory(): PrismaClient {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const client = new PrismaClient() as any;
+    const client = new PrismaClient();
 
     for (const field of Object.getOwnPropertyNames(client).filter(
       (property: string) =>
-        !property.startsWith("$") && !property.startsWith("_")
+        !property.startsWith("$") && !property.startsWith("_"),
     )) {
       for (const action of ImpureActions) {
         const pristine = client[field][action];

@@ -1,17 +1,24 @@
 {
-  "root": true,
   "compilerOptions": {
-    "outDir": "dist",
     "allowUnreachableCode": false,
-    "downlevelIteration": true,
     "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": false,
+    "alwaysStrict": true,
+    "exactOptionalPropertyTypes": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": false,
     "noUncheckedIndexedAccess": true,
-    "strict": true,
-    "module": "CommonJS",
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
+    "downlevelIteration": true,
+    "outDir": "./dist",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "declaration": true,
@@ -23,15 +30,14 @@
     "forceConsistentCasingInFileNames": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ES5",
     "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "lib": ["ES2021.String"]
+    "skipLibCheck": true
   },
   "ts-node": {
-    "files": true
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.ts"]
 }

@@ -1,9 +1,7 @@
 {
-  "verbose": true,
-  "restoreMocks": true,
-  "transform": {
-    "^.+\\.ts?$": "ts-jest"
-  },
   "collectCoverage": true,
-  "coverageReporters": ["lcov"]
+  "modulePathIgnorePatterns": ["dist"],
+  "transform": {
+    "^.+\\.ts?$": ["ts-jest", { "isolatedModules": true }]
+  }
 }
