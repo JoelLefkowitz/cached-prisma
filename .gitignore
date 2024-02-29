@@ -28,3 +28,4 @@ __pycache__/
 .psc-ide-port
 .terraform.lock.hcl
 yarn-error.log
+pnpm-lock.yaml

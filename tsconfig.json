@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowUnreachableCode": false,
+    "target": "ESNext",
     "allowUnusedLabels": false,
     "alwaysStrict": true,
     "exactOptionalPropertyTypes": true,
@@ -38,6 +39,10 @@
       "module": "CommonJS"
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["**/*.spec.ts"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.ts"
+  ]
 }
