@@ -40,8 +40,8 @@
     "docs": "typedoc"
   },
   "peerDependencies": {
-    "@prisma/client": "5.9.1",
-    "prisma": "^5.9.1"
+    "@prisma/client": "*",
+    "prisma": "*"
   },
   "dependencies": {
     "@types/memcached": "^2.2.10",
