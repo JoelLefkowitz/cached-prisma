@@ -1,13 +1,13 @@
 import { Memcached, Prisma } from "../../src";
-
-import { PrismaClient } from ".prisma/client";
-
-class MemcachedPrisma extends Prisma {
-  static override cacheFactory = () => new Memcached("127.0.0.1:11211", 10);
-}
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import { PrismaClient } from "@prisma/client";
+import { RedisPrisma } from "./RedisPrisma";
+const redisPrisma = new RedisPrisma();
 
 export const caches = [
   { name: "Without cache", cache: new PrismaClient() },
   { name: "LruMap cache", cache: new Prisma().client },
-  { name: "Memcached", cache: new MemcachedPrisma().client },
+  { name: "Memcached", cache: new Memcached() },
+  { name: "Redis cache", cache: redisPrisma.client },
 ];
