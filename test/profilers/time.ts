@@ -34,12 +34,7 @@ const profile = async (title: string, task: Task) =>
     );
   });
 
-export const run = async (): Promise<void> => {
-  await profile(`${cycles} read calls:`, read(1));
-  await profile(`${cycles} read and write calls:`, readWrite(1, "test"));
-  process.exit(0);
-};
-
-if (typeof require !== "undefined" && require.main === module) {
-  run();
-}
+Promise.all([
+  profile(`${cycles} read calls:`, read(1)),
+  profile(`${cycles} read and write calls:`, readWrite(1, "test")),
+]).catch(console.error);

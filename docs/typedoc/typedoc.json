@@ -1,0 +1,15 @@
+{
+  "entryPoints": ["../../src"],
+  "out": "../dist",
+  "customCss": "./styles.css",
+  "cleanOutputDir": true,
+  "plugin": ["typedoc-material-theme"],
+  "themeColor": "#BA16B5",
+  "categorizeByGroup": true,
+  "groupOrder": ["Functions"],
+  "categoryOrder": ["Factories", "Aliases", "Validators"],
+  "navigation": {
+    "includeGroups": true,
+    "includeCategories": true
+  }
+}

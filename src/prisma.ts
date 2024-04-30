@@ -54,7 +54,6 @@ export class Prisma {
   static cacheFactory = (): Cache => new LruCache(100);
 
   private static clientFactory(): PrismaClient {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const client = new PrismaClient();
 
     for (const field of Object.getOwnPropertyNames(client).filter(

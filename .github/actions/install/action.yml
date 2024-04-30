@@ -10,27 +10,22 @@ runs:
   using: composite
   steps:
     - name: Checkout the source code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Fetch yarn's cache directory path
-      id: yarn-cache-dir-path
+    - name: Enable corepack
       shell: bash
-      run: echo "YARN_CACHE_DIR=$(yarn cache dir)" >> $GITHUB_ENV
-
-    - name: Set up yarn package caching
-      uses: actions/cache@v3
-      id: yarn-cache
-      with:
-        path: ${{ env.YARN_CACHE_DIR }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
+      run: corepack enable
 
     - name: Set the node version
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
+        cache: yarn
 
-    - name: Install node dependencies
+    - name: Install yarn dependencies
       shell: bash
-      run: yarn install --frozen-lockfile
+      run: yarn install --immutable
+
+    - name: Install trufflehog3
+      shell: bash
+      run: pip install trufflehog3

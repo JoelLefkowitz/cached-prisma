@@ -1,0 +1,11 @@
+{
+  "plugins": ["prettier-plugin-jsdoc"],
+  "jsdocCapitalizeDescription": true,
+  "jsdocVerticalAlignment": true,
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": { "printWidth": 120 }
+    }
+  ]
+}

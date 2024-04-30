@@ -1,0 +1,24 @@
+severity: low
+exclude:
+  - message: Giphy links
+    pattern: media\.giphy\.com
+
+  - message: Shield links
+    pattern: img\.shields\.io
+
+  - message: Codacy references
+    pattern: "codacy_id:"
+
+  - message: Local postgres environment
+    pattern: postgresql://user:password@localhost:5432/db
+
+  - message: Dependencies
+    paths:
+      - node_modules
+
+  - message: Tooling outputs
+    paths:
+      - docs/dist
+      - package-lock.json
+      - yarn-error.log
+      - yarn.lock

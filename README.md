@@ -5,6 +5,7 @@ A Prisma client abstraction that simplifies caching.
 ![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/cached-prisma/review.yml)
 ![Version](https://img.shields.io/npm/v/cached-prisma)
 ![Downloads](https://img.shields.io/npm/dw/cached-prisma)
+![Size](https://img.shields.io/bundlephobia/min/cached-prisma)
 ![Quality](https://img.shields.io/codacy/grade/00658bb866d6482184b86d16d3ce5ae8)
 ![Coverage](https://img.shields.io/codacy/coverage/00658bb866d6482184b86d16d3ce5ae8)
 
@@ -103,13 +104,13 @@ export DATABASE_URL=postgresql://user:password@localhost:5432/db
 Generate the types for your client.
 
 ```bash
-prisma generate
+npx prisma generate
 ```
 
 Migrate the database.
 
 ```bash
-prisma migrate dev
+npx prisma migrate dev
 ```
 
 Now we can create our client:
@@ -122,7 +123,7 @@ const client = new Prisma().client;
 client.user.create({ data: { name: "Joel" } });
 ```
 
-## Further reading
+## Discussion
 
 The default cache is a fixed size queue that pops values as it surpasses its
 maximum length.
@@ -195,7 +196,19 @@ docker run --rm -d              \
 docker run -d --rm -p 11211:11211 memcached:1.6.9
 ```
 
+```bash
+npx prisma migrate dev --schema ./test/prisma/schema.prisma
+```
+
 ## Tooling
+
+### Dependencies
+
+To install dependencies:
+
+```bash
+yarn install
+```
 
 ### Tests
 
@@ -249,8 +262,8 @@ bump2version patch
 
 Lots of love to the open source community!
 
-<p align='center'>
+<div align='center'>
     <img width=200 height=200 src='https://media.giphy.com/media/osAcIGTSyeovPq6Xph/giphy.gif' alt='Be kind to your mind' />
     <img width=200 height=200 src='https://media.giphy.com/media/KEAAbQ5clGWJwuJuZB/giphy.gif' alt='Love each other' />
     <img width=200 height=200 src='https://media.giphy.com/media/WRWykrFkxJA6JJuTvc/giphy.gif' alt="It's ok to have a bad day" />
-</p>
+</div>
