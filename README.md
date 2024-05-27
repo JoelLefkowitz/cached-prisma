@@ -63,7 +63,7 @@ const cache2 = new Prisma().cache;
 cache1 === cache2;
 ```
 
-## Minimal example
+### Minimal example
 
 Create a prisma schema.
 

@@ -15,11 +15,11 @@
     "cliui",
     "codacy",
     "corepack",
+    "datasource",
     "giphy",
     "jsdoc",
     "lefkowitz",
     "pkey",
-    "datasource",
     "plusplus",
     "trufflehog"
   ]

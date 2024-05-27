@@ -12,7 +12,9 @@
   ],
   "keywords": [
     "prisma",
-    "caching"
+    "caching",
+    "memcached",
+    "redis"
   ],
   "packageManager": "yarn@4.1.1",
   "metadata": {
