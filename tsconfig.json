@@ -21,6 +21,7 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "target": "ES5",
+    "baseUrl": ".",
     "resolveJsonModule": true,
     "declaration": true,
     "importHelpers": false,
