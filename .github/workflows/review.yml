@@ -13,10 +13,17 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Run linters
-        run: npm run lint
+        run: yarn lint
 
       - name: Run tests
-        run: npm run test
+        run: |
+          docker run --rm -d -p 5432:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres:13
+          docker run --rm -d -p 11211:11211 memcached:1.6.9
+          yarn prisma generate
+          yarn prisma migrate dev --schema ./test/prisma/schema.prisma
+          yarn test
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/db
 
       - name: Publish test coverage
         uses: codacy/codacy-coverage-reporter-action@v1

@@ -1,8 +1,3 @@
----
-name: "Pull Request"
-about: Open a pull request
----
-
 # Pull Request
 
 ## Description

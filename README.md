@@ -84,7 +84,7 @@ model User {
 ```
 
 Create a database. In this example we create a postgres container. You can
-switch db, user and password for your environment.
+switch the db, user and password for your environment.
 
 ```bash
 docker run --rm -d              \
@@ -177,29 +177,6 @@ After any of the following state mutating methods we flush the cache:
 - updateMany
 - upsert
 
-## Running locally
-
-```bash
-git clone https://github.com/joellefkowitz/cached-prisma.git
-```
-
-To start up a postgres and memcached container:
-
-```bash
-docker run --rm -d              \
-  -p 5432:5432                  \
-  -e POSTGRES_DB=db             \
-  -e POSTGRES_USER=user         \
-  -e POSTGRES_PASSWORD=password \
-  postgres:13
-
-docker run -d --rm -p 11211:11211 memcached:1.6.9
-```
-
-```bash
-npx prisma migrate dev --schema ./test/prisma/schema.prisma
-```
-
 ## Tooling
 
 ### Dependencies
@@ -215,7 +192,26 @@ yarn install
 To run tests:
 
 ```bash
-npm run test
+docker run --rm -d              \
+  -p 5432:5432                  \
+  -e POSTGRES_DB=db             \
+  -e POSTGRES_USER=user         \
+  -e POSTGRES_PASSWORD=password \
+  postgres:13
+
+docker run --rm -d \
+  -p 11211:11211   \
+  memcached:1.6.9
+```
+
+```bash
+export DATABASE_URL=postgresql://user:password@localhost:5432/db
+yarn prisma generate
+yarn prisma migrate dev --schema ./test/prisma/schema.prisma
+```
+
+```bash
+yarn test
 ```
 
 ### Documentation
@@ -223,7 +219,7 @@ npm run test
 To generate the documentation locally:
 
 ```bash
-npm run docs
+yarn docs
 ```
 
 ### Linters
@@ -231,7 +227,7 @@ npm run docs
 To run linters:
 
 ```bash
-npm run lint
+yarn lint
 ```
 
 ### Formatters
@@ -239,7 +235,7 @@ npm run lint
 To run formatters:
 
 ```bash
-npm run format
+yarn format
 ```
 
 ## Contributing

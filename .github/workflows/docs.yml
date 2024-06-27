@@ -23,7 +23,7 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Build the docs
-        run: npm run docs
+        run: yarn docs
 
       - name: Upload the artifacts
         uses: actions/upload-pages-artifact@v3
