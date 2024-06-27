@@ -206,7 +206,7 @@ docker run --rm -d \
 
 ```bash
 export DATABASE_URL=postgresql://user:password@localhost:5432/db
-yarn prisma generate
+yarn prisma generate --schema ./test/prisma/schema.prisma
 yarn prisma migrate dev --schema ./test/prisma/schema.prisma
 ```
 
