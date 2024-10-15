@@ -1,7 +1,7 @@
 {
   "name": "cached-prisma",
   "description": "A Prisma client abstraction that simplifies caching.",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "license": "MIT",
   "author": "Joel Lefkowitz",
   "repository": "https://github.com/joellefkowitz/cached-prisma",
