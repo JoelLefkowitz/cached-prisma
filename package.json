@@ -45,8 +45,7 @@
     "strip-ansi": "^6.0.1"
   },
   "dependencies": {
-    "@prisma/client": "5.9.1",
-    "@types/memcached": "^2.2.10",
+    "@prisma/client": "^5.9.1",
     "collections": "^5.1.12",
     "memcached": "^2.2.2",
     "prisma": "^5.9.1"
