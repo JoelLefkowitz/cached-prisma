@@ -3,16 +3,11 @@ import { Memcached, Prisma, Redis } from "../../src";
 import { PrismaClient } from ".prisma/client";
 
 class MemcachedPrisma extends Prisma {
-  static override cacheFactory = () => new Memcached("127.0.0.1:11211", 10);
+  static override cacheFactory = () => new Memcached();
 }
 
 class RedisPrisma extends Prisma {
-  static override cacheFactory = () =>
-    new Redis({
-      lifetime: 10,
-      redisOptions: { host: "127.0.0.1", port: 6379 },
-      cacheKeyPrefix: "cache",
-    });
+  static override cacheFactory = () => new Redis();
 }
 
 export const caches = [

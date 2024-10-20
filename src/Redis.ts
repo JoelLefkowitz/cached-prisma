@@ -1,62 +1,29 @@
 import { Cache } from "./Prisma";
-import IORedis from "ioredis";
-
-export type RedisParams = {
-  cacheKeyPrefix?: string;
-  lifetime: number;
-  redisOptions?: IORedis.RedisOptions;
-  redisClient?: IORedis.Redis;
-};
+import { Redis as RedisClient } from "ioredis";
 
 export class Redis implements Cache {
-  private client: IORedis.Redis;
-  private lifetime: number;
-  private cacheKeyPrefix: string | undefined;
-  private logger: Console | undefined;
+  readonly lifetime: number;
 
-  constructor({
-    cacheKeyPrefix,
-    lifetime,
-    redisOptions,
-    redisClient,
-  }: RedisParams) {
-    if (redisClient) {
-      this.client = redisClient;
-    } else if (redisOptions) {
-      this.client = new IORedis.Redis(redisOptions);
-    } else {
-      throw new Error("redisOptions or redisClient must be provided");
-    }
+  private client: RedisClient;
+
+  constructor(host = "0.0.0.0", port = 6379, lifetime = 10, prefix = "cache") {
+    this.client = new RedisClient(port, host, { keyPrefix: prefix });
     this.lifetime = lifetime;
-    this.cacheKeyPrefix = cacheKeyPrefix;
-    if (this.cacheKeyPrefix) {
-      this.logger?.warn("Redis cache key prefix:", this.cacheKeyPrefix);
-    }
   }
 
-  async read(key: string): Promise<string | null> {
-    const redisKey = this.cacheKeyPrefix
-      ? `${this.cacheKeyPrefix}:${key}`
-      : key;
-    const data = await this.client.get(redisKey);
-    return data ?? null;
+  read(key: string): Promise<string | null> {
+    return this.client.get(key);
   }
 
   async write(key: string, value: string): Promise<void> {
-    const redisKey = this.cacheKeyPrefix
-      ? `${this.cacheKeyPrefix}:${key}`
-      : key;
-
-    await this.client.set(redisKey, value, "EX", this.lifetime);
+    await this.client.set(key, value, "EX", this.lifetime);
   }
 
-  async deleteKeys(pattern: string): Promise<void> {}
-
   async flush(): Promise<void> {
-    if (this.cacheKeyPrefix) {
-      await this.deleteKeys(`${this.cacheKeyPrefix}*`);
-    } else {
-      await this.client.flushdb();
-    }
+    await this.client.flushdb();
+  }
+
+  close(): void {
+    this.client.disconnect();
   }
 }

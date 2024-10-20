@@ -10,7 +10,6 @@ export interface Cache {
 export interface SingletonClient {
   cache?: Cache;
   client?: PrismaClient;
-  logger?: unknown;
 }
 
 export const PureActions = [
