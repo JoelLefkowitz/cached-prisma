@@ -19,6 +19,7 @@ jobs:
         run: |
           docker run --rm -d -p 5432:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres
           docker run --rm -d -p 11211:11211 memcached
+          docker run --rm -d -p 6379:6379 redis
           yarn prisma generate --schema ./test/prisma/schema.prisma
           yarn prisma migrate dev --schema ./test/prisma/schema.prisma
           yarn test

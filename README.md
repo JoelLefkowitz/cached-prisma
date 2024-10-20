@@ -9,6 +9,28 @@ A Prisma client abstraction that simplifies caching.
 ![Quality](https://img.shields.io/codacy/grade/00658bb866d6482184b86d16d3ce5ae8)
 ![Coverage](https://img.shields.io/codacy/coverage/00658bb866d6482184b86d16d3ce5ae8)
 
+```txt
+1000 read calls:
+┌─────────────────┬─────────────┐
+│     (index)     │   time /s   │
+├─────────────────┼─────────────┤
+│  Without cache  │ 0.982411792 │
+│  LruMap cache   │  0.034117   │
+│ Memcached cache │ 0.053526041 │
+│   Redis cache   │ 0.046146417 │
+└─────────────────┴─────────────┘
+
+1000 read and write calls:
+┌─────────────────┬─────────────┐
+│     (index)     │   time /s   │
+├─────────────────┼─────────────┤
+│  Without cache  │ 2.298558208 │
+│  LruMap cache   │  2.304989   │
+│ Memcached cache │ 2.305258458 │
+│   Redis cache   │ 2.307943167 │
+└─────────────────┴─────────────┘
+```
+
 ## Installing
 
 ```bash
@@ -140,12 +162,21 @@ Memcached support is provided out of the box:
 import { Memcached } from "cached-prisma";
 
 class CustomPrisma extends Prisma {
-  static override cacheFactory = () => new Memcached("127.0.0.1:11211", 10);
+  static override cacheFactory = () => new Memcached("127.0.0.1", 11211, 10);
 }
 ```
 
-The second parameter to the Memcached constructor is the storage lifetime of
-each write in seconds.
+Also Redis support is provided out of the box:
+
+```ts
+import { Redis } from "cached-prisma";
+
+class CustomPrisma extends Prisma {
+  static override cacheFactory = () => new Redis("127.0.0.1", 6379, 10);
+}
+```
+
+The third constructor parameter each time is the storage lifetime of each write in seconds.
 
 Caches implement safe read and write methods:
 
@@ -202,6 +233,10 @@ docker run --rm -d              \
 docker run --rm -d \
   -p 11211:11211   \
   memcached
+
+docker run --rm -d \
+  -p 6379:6379   \
+  redis
 ```
 
 ```bash
