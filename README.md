@@ -92,7 +92,7 @@ docker run --rm -d              \
   -e POSTGRES_DB=db             \
   -e POSTGRES_USER=user         \
   -e POSTGRES_PASSWORD=password \
-  postgres:13
+  postgres
 ```
 
 Define the DATABASE_URL environment variable mentioned in our prisma schema.
@@ -197,11 +197,11 @@ docker run --rm -d              \
   -e POSTGRES_DB=db             \
   -e POSTGRES_USER=user         \
   -e POSTGRES_PASSWORD=password \
-  postgres:13
+  postgres
 
 docker run --rm -d \
   -p 11211:11211   \
-  memcached:1.6.9
+  memcached
 ```
 
 ```bash

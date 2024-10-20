@@ -17,8 +17,8 @@ jobs:
 
       - name: Run tests
         run: |
-          docker run --rm -d -p 5432:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres:13
-          docker run --rm -d -p 11211:11211 memcached:1.6.9
+          docker run --rm -d -p 5432:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres
+          docker run --rm -d -p 11211:11211 memcached
           yarn prisma generate --schema ./test/prisma/schema.prisma
           yarn prisma migrate dev --schema ./test/prisma/schema.prisma
           yarn test
