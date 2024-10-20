@@ -162,12 +162,21 @@ Memcached support is provided out of the box:
 import { Memcached } from "cached-prisma";
 
 class CustomPrisma extends Prisma {
-  static override cacheFactory = () => new Memcached("127.0.0.1:11211", 10);
+  static override cacheFactory = () => new Memcached("127.0.0.1", 11211, 10);
 }
 ```
 
-The second parameter to the Memcached constructor is the storage lifetime of
-each write in seconds.
+Also Redis support is provided out of the box:
+
+```ts
+import { Redis } from "cached-prisma";
+
+class CustomPrisma extends Prisma {
+  static override cacheFactory = () => new Redis("127.0.0.1", 6379, 10);
+}
+```
+
+The third constructor parameter each time is the storage lifetime of each write in seconds.
 
 Caches implement safe read and write methods:
 
@@ -224,6 +233,10 @@ docker run --rm -d              \
 docker run --rm -d \
   -p 11211:11211   \
   memcached
+
+docker run --rm -d \
+  -p 6379:6379   \
+  redis
 ```
 
 ```bash
