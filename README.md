@@ -87,7 +87,7 @@ cache1 === cache2;
 
 ### Minimal example
 
-Create a prisma schema.
+Create a prisma schema:
 
 ```prisma
 datasource db {
@@ -117,19 +117,19 @@ docker run --rm -d              \
   postgres
 ```
 
-Define the DATABASE_URL environment variable mentioned in our prisma schema.
+Define the DATABASE_URL environment variable mentioned in our prisma schema:
 
 ```bash
 export DATABASE_URL=postgresql://user:password@localhost:5432/db
 ```
 
-Generate the types for your client.
+Generate the types for your client:
 
 ```bash
 npx prisma generate
 ```
 
-Migrate the database.
+Migrate the database:
 
 ```bash
 npx prisma migrate dev
@@ -222,6 +222,8 @@ yarn install
 
 To run tests:
 
+Create a test database:
+
 ```bash
 docker run --rm -d              \
   -p 5432:5432                  \
@@ -229,15 +231,16 @@ docker run --rm -d              \
   -e POSTGRES_USER=user         \
   -e POSTGRES_PASSWORD=password \
   postgres
-
-docker run --rm -d \
-  -p 11211:11211   \
-  memcached
-
-docker run --rm -d \
-  -p 6379:6379   \
-  redis
 ```
+
+Create test cache providers:
+
+```bash
+docker run --rm -d -p 11211:11211 memcached
+docker run --rm -d -p 6379:6379 redis
+```
+
+Apply the database migrations:
 
 ```bash
 export DATABASE_URL=postgresql://user:password@localhost:5432/db
