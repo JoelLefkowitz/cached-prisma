@@ -9,6 +9,28 @@ A Prisma client abstraction that simplifies caching.
 ![Quality](https://img.shields.io/codacy/grade/00658bb866d6482184b86d16d3ce5ae8)
 ![Coverage](https://img.shields.io/codacy/coverage/00658bb866d6482184b86d16d3ce5ae8)
 
+```txt
+1000 read calls:
+┌─────────────────┬─────────────┐
+│     (index)     │   time /s   │
+├─────────────────┼─────────────┤
+│  Without cache  │ 0.982411792 │
+│  LruMap cache   │  0.034117   │
+│ Memcached cache │ 0.053526041 │
+│   Redis cache   │ 0.046146417 │
+└─────────────────┴─────────────┘
+
+1000 read and write calls:
+┌─────────────────┬─────────────┐
+│     (index)     │   time /s   │
+├─────────────────┼─────────────┤
+│  Without cache  │ 2.298558208 │
+│  LruMap cache   │  2.304989   │
+│ Memcached cache │ 2.305258458 │
+│   Redis cache   │ 2.307943167 │
+└─────────────────┴─────────────┘
+```
+
 ## Installing
 
 ```bash

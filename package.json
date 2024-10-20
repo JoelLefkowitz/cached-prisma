@@ -2,10 +2,10 @@
   "name": "cached-prisma",
   "description": "A Prisma client abstraction that simplifies caching.",
   "version": "1.3.2",
+  "repository": "https://github.com/joellefkowitz/cached-prisma",
+  "homepage": "https://cached-prisma.readthedocs.io",
   "license": "MIT",
   "author": "Joel Lefkowitz",
-  "repository": "https://github.com/joellefkowitz/cached-prisma",
-  "homepage": "https://joellefkowitz.github.io/cached-prisma",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -47,12 +47,15 @@
   "dependencies": {
     "@prisma/client": "^5.9.1",
     "collections": "^5.1.12",
+    "ioredis": "^5.4.1",
     "memcached": "^2.2.2",
     "prisma": "^5.9.1"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
+    "@types/ioredis": "^5.0.0",
     "@types/jest": "29.0.0",
+    "@types/memcached": "^2.2.10",
     "@types/node": "^18.11.0",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",

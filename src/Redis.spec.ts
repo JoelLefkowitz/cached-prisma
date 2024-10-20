@@ -1,7 +1,7 @@
-import { Memcached } from "./Memcached";
+import { Redis } from "./Redis";
 
-describe("Memcached", () => {
-  const cache = new Memcached("0.0.0.0", 11211, 1);
+describe("Redis", () => {
+  const cache = new Redis("0.0.0.0", 6379, 1);
 
   afterAll(() => {
     cache.close();

@@ -1,12 +1,13 @@
-import { Cache } from "./prisma";
+import { Cache } from "./Prisma";
 import MemcachedClient from "memcached";
 
 export class Memcached implements Cache {
-  private client: MemcachedClient;
-  private lifetime: number;
+  readonly lifetime: number;
 
-  constructor(address = "127.0.0.0:11211", lifetime = 10) {
-    this.client = new MemcachedClient(address);
+  private client: MemcachedClient;
+
+  constructor(host = "0.0.0.0", port = 11211, lifetime = 10) {
+    this.client = new MemcachedClient(`${host}:${port}`);
     this.lifetime = lifetime;
   }
 
