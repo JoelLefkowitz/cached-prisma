@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 import { LruCache } from "./LruCache";
 import { PrismaClient } from "@prisma/client";
 
@@ -39,18 +38,14 @@ export class Prisma {
 
   cache: Cache;
   client: PrismaClient;
-  logger?: Console;
 
-  constructor(logger?: Console) {
-    logger?.log("new prisma instance");
-    this.logger = logger;
+  constructor() {
     if (!Prisma.singleton.cache) {
-      this.logger?.warn("DB Caching is enabled");
       Prisma.singleton.cache = Prisma.cacheFactory();
     }
 
     if (!Prisma.singleton.client) {
-      Prisma.singleton.client = Prisma.clientFactory(this.logger);
+      Prisma.singleton.client = Prisma.clientFactory();
     }
 
     this.client = Prisma.singleton.client;
@@ -59,16 +54,14 @@ export class Prisma {
 
   static cacheFactory = (_params?: unknown): Cache => new LruCache(100);
 
-  private static clientFactory(logger?: Console): PrismaClient {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const client = new PrismaClient() as any;
+  private static clientFactory(): PrismaClient {
+    const client = new PrismaClient();
 
     for (const field of Object.getOwnPropertyNames(client).filter(
       (property: string) =>
-        !property.startsWith("$") && !property.startsWith("_")
+        !property.startsWith("$") && !property.startsWith("_"),
     )) {
       for (const action of ImpureActions) {
-        logger?.debug(`${field}.${action}: cache flush.`);
         const pristine = client[field][action];
 
         client[field][action] = (...args: unknown[]) => {
@@ -85,10 +78,9 @@ export class Prisma {
           const cached = await Prisma.singleton.cache?.read(key);
 
           if (cached) {
-            logger?.debug(`Cache hit for ${key}`);
             return JSON.parse(cached);
           }
-          logger?.debug(`Cache miss for ${key}`);
+
           const evaluated = await pristine(...args);
           await Prisma.singleton.cache?.write(key, JSON.stringify(evaluated));
           return evaluated;
@@ -97,9 +89,5 @@ export class Prisma {
     }
 
     return client;
-  }
-
-  protected setLogger(logger?: Console): void {
-    this.logger = logger;
   }
 }

@@ -27,8 +27,8 @@ describe("Redis", () => {
     const cache = new Redis(redisInitObject);
     await cache.write("a", "1");
 
-    setTimeout(async () => {
-      expect(await cache.read("a")).toBeNull();
+    setTimeout(() => {
+      expect(cache.read("a")).resolves.toBeNull();
     }, 1000);
   });
 });

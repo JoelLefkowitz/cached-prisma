@@ -14,7 +14,7 @@ export class Memcached implements Cache {
     return new Promise((resolve, reject) => {
       this.client.get(key, (err: string, data: string | null) => {
         if (err) {
-          reject(err);
+          reject(new Error(err));
         } else {
           resolve(data ?? null);
         }
@@ -26,7 +26,7 @@ export class Memcached implements Cache {
     return new Promise((resolve, reject) => {
       this.client.set(key, value, this.lifetime, (err: string) => {
         if (err) {
-          reject(err);
+          reject(new Error(err));
         } else {
           resolve();
         }
@@ -40,5 +40,9 @@ export class Memcached implements Cache {
         resolve();
       });
     });
+  }
+
+  close(): void {
+    this.client.end();
   }
 }

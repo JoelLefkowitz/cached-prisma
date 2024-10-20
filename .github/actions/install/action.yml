@@ -6,53 +6,26 @@ inputs:
     description: Node version
     default: "18"
 
-  python-version:
-    description: Python version
-    default: "3.8"
-
 runs:
   using: composite
   steps:
     - name: Checkout the source code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Fetch yarn's cache directory path
-      id: yarn-cache-dir-path
+    - name: Enable corepack
       shell: bash
-      run: echo "YARN_CACHE_DIR=$(yarn cache dir)" >> $GITHUB_ENV
-
-    - name: Set up yarn package caching
-      uses: actions/cache@v3
-      id: yarn-cache
-      with:
-        path: ${{ env.YARN_CACHE_DIR }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-
-    - name: Set up pip package caching
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: ${{ runner.os }}-pip-
+      run: corepack enable
 
     - name: Set the node version
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
+        cache: yarn
 
-    - name: Set the python version
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ inputs.python-version }}
-
-    - name: Install node dependencies
+    - name: Install yarn dependencies
       shell: bash
-      run: |
-        yarn install --frozen-lockfile
-        yarn global add nps ts-node
+      run: yarn install --immutable
 
-    - name: Install python dependencies
+    - name: Install trufflehog3
       shell: bash
       run: pip install trufflehog3

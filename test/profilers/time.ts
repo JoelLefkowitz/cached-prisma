@@ -7,7 +7,7 @@ const cycles = 1000;
 
 export const time = async (
   client: PrismaClient,
-  task: Task
+  task: Task,
 ): Promise<number> => {
   const time = process.hrtime();
 
@@ -26,20 +26,15 @@ const profile = async (title: string, task: Task) =>
     caches.map(async (i) => ({
       name: i.name,
       data: { "time /s": await time(i.cache, task) },
-    }))
+    })),
   ).then((results) => {
     console.log(title);
     console.table(
-      results.reduce((acc, x) => ({ ...acc, ...{ [x.name]: x.data } }), {})
+      results.reduce((acc, x) => ({ ...acc, ...{ [x.name]: x.data } }), {}),
     );
   });
 
-export const run = async (): Promise<void> => {
-  await profile(`${cycles} read calls:`, read(1));
-  await profile(`${cycles} read and write calls:`, readWrite(1, "test"));
-  process.exit(0);
-};
-
-if (typeof require !== "undefined" && require.main === module) {
-  run();
-}
+Promise.all([
+  profile(`${cycles} read calls:`, read(1)),
+  profile(`${cycles} read and write calls:`, readWrite(1, "test")),
+]).catch(console.error);

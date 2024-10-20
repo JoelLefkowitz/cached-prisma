@@ -5,34 +5,23 @@ on: [push, pull_request]
 jobs:
   review:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14, 16, 18]
-
     steps:
       - name: Checkout the source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/actions/install
-        with:
-          node-version: ${{ matrix.node-version }}
 
       - name: Run linters
-        run: nps lint
-
-      - name: Launch a postgres instance
-        run: |
-          docker run -d -p 5432:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres:13
-          npx prisma migrate dev --schema ./prisma/schema.prisma
-        env:
-          DATABASE_URL: postgresql://user:password@localhost:5432/db
-
-      - name: Launch a memcached instance
-        run: docker run -d  -p 11211:11211 memcached:1.6.9
+        run: yarn lint
 
       - name: Run tests
-        run: nps test
+        run: |
+          docker run --rm -d -p 5432:5432 -e POSTGRES_DB=db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password postgres
+          docker run --rm -d -p 11211:11211 memcached
+          yarn prisma generate --schema ./test/prisma/schema.prisma
+          yarn prisma migrate dev --schema ./test/prisma/schema.prisma
+          yarn test
         env:
           DATABASE_URL: postgresql://user:password@localhost:5432/db
 
@@ -40,4 +29,4 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@v1
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: ./coverage/lcov.info
+          coverage-reports: coverage/clover.xml

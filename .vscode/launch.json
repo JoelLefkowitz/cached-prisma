@@ -2,22 +2,31 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug tests",
+      "name": "Start",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
+      "runtimeArgs": ["--transpile-only"],
+      "program": "${file}",
+      "cwd": "${workspaceRoot}",
       "console": "integratedTerminal",
-      "env": {
-        "DATABASE_URL": "postgresql://user:password@localhost:5432/db"
-      }
+      "internalConsoleOptions": "neverOpen"
     },
     {
-      "name": "Debug entrypoint",
+      "name": "Test",
       "type": "node",
       "request": "launch",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "args": ["${workspaceFolder}/src/main.ts"],
-      "console": "integratedTerminal"
+      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+      "args": [
+        "--verbose",
+        "-i",
+        "--no-cache",
+        "--testPathPattern",
+        "${fileBasename}"
+      ],
+      "cwd": "${workspaceRoot}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }
