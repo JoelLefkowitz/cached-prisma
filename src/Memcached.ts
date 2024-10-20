@@ -1,4 +1,4 @@
-import { Cache } from "./prisma";
+import { Cache } from "./Prisma";
 import MemcachedClient from "memcached";
 
 export class Memcached implements Cache {

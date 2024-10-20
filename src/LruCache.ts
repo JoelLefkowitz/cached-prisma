@@ -1,4 +1,4 @@
-import { Cache } from "./prisma";
+import { Cache } from "./Prisma";
 import LruMap from "collections/lru-map";
 
 export type Serialized = { key: string; value: string };

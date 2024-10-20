@@ -11,7 +11,7 @@ class RedisPrisma extends Prisma {
     new Redis({
       lifetime: 10,
       redisOptions: { host: "127.0.0.1", port: 6379 },
-      cacheKeyPrefix: "dbcache",
+      cacheKeyPrefix: "cache",
     });
 }
 

@@ -52,7 +52,7 @@ export class Prisma {
     this.cache = Prisma.singleton.cache;
   }
 
-  static cacheFactory = (_params?: unknown): Cache => new LruCache(100);
+  static cacheFactory = (): Cache => new LruCache(100);
 
   private static clientFactory(): PrismaClient {
     const client = new PrismaClient();

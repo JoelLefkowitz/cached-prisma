@@ -1,4 +1,4 @@
-import { Prisma } from "./prisma";
+import { Prisma } from "./Prisma";
 
 describe("Prisma", () => {
   it("has a shared client instance.", () => {
