@@ -1,5 +1,5 @@
-import { LruCache } from "./LruCache";
 import { PrismaClient } from "@prisma/client";
+import { LruCache } from "./LruCache";
 
 export interface Cache {
   read: (key: string) => Promise<string | null>;
@@ -77,7 +77,7 @@ export class Prisma {
           const cached = await Prisma.singleton.cache?.read(key);
 
           if (cached) {
-            return JSON.parse(cached);
+            return transformDates(JSON.parse(cached));
           }
 
           const evaluated = await pristine(...args);
@@ -89,4 +89,21 @@ export class Prisma {
 
     return client;
   }
+}
+
+export function isDateStringRegex(value: unknown): value is string {
+	const isoPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/;
+	return typeof value === 'string' && isoPattern.test(value);
+}
+
+export function transformDates<T>(data: T): T {
+	if (data instanceof Date) return data as unknown as T;
+	if (Array.isArray(data)) return data.map(transformDates) as unknown as T;
+	if (typeof data === 'object' && data !== null) {
+		for (const key in data) {
+			data[key] = transformDates(data[key]);
+		}
+	}
+
+	return isDateStringRegex(data) ? new Date(data) as unknown as T : data;
 }
