@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { LruCache } from "./LruCache";
+import { PrismaClient } from "@prisma/client";
 
 export interface Cache {
   read: (key: string) => Promise<string | null>;
