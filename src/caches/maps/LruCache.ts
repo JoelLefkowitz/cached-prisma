@@ -1,7 +1,5 @@
-import { Cache } from "./Prisma";
+import { Cache } from "../../models/Cache.model";
 import LruMap from "collections/lru-map";
-
-export type Serialized = { key: string; value: string };
 
 export class LruCache implements Cache {
   private map: LruMap;
@@ -10,8 +8,8 @@ export class LruCache implements Cache {
     this.map = new LruMap({}, size);
   }
 
-  read(key: string): Promise<string | null> {
-    return Promise.resolve(this.map.get(key) ?? null);
+  async read(key: string): Promise<string | null> {
+    return this.map.get(key) ?? null;
   }
 
   write(key: string, value: string): Promise<void> {

@@ -15,6 +15,7 @@ exclude:
   - message: Dependencies
     paths:
       - node_modules
+      - venv
 
   - message: Tooling outputs
     paths:

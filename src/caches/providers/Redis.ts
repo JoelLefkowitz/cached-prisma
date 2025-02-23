@@ -1,4 +1,4 @@
-import { Cache } from "./Prisma";
+import { Cache } from "../../models/Cache.model";
 import { Redis as RedisClient } from "ioredis";
 
 export class Redis implements Cache {
@@ -11,7 +11,7 @@ export class Redis implements Cache {
     this.lifetime = lifetime;
   }
 
-  read(key: string): Promise<string | null> {
+  async read(key: string): Promise<string | null> {
     return this.client.get(key);
   }
 

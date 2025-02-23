@@ -1,39 +1,11 @@
-import { LruCache } from "./LruCache";
+import { Cache } from "../models/Cache.model";
+import { Client } from "../models/Client.model";
+import { LruCache } from "../caches/maps/LruCache";
 import { PrismaClient } from "@prisma/client";
-
-export interface Cache {
-  read: (key: string) => Promise<string | null>;
-  write: (key: string, value: string) => Promise<void>;
-  flush: () => Promise<void>;
-}
-
-export interface SingletonClient {
-  cache?: Cache;
-  client?: PrismaClient;
-}
-
-export const PureActions = [
-  "aggregate",
-  "count",
-  "findFirst",
-  "findMany",
-  "findUnique",
-  "queryRaw",
-];
-
-export const ImpureActions = [
-  "create",
-  "createMany",
-  "delete",
-  "deleteMany",
-  "executeRaw",
-  "update",
-  "updateMany",
-  "upsert",
-];
+import { actions } from "../models/Action.model";
 
 export class Prisma {
-  private static singleton: SingletonClient = {};
+  private static singleton: Client = {};
 
   cache: Cache;
   client: PrismaClient;
@@ -60,7 +32,7 @@ export class Prisma {
       (property: string) =>
         !property.startsWith("$") && !property.startsWith("_"),
     )) {
-      for (const action of ImpureActions) {
+      for (const action of actions.impure) {
         const pristine = client[field][action];
 
         client[field][action] = (...args: unknown[]) => {
@@ -69,7 +41,7 @@ export class Prisma {
         };
       }
 
-      for (const action of PureActions) {
+      for (const action of actions.pure) {
         const pristine = client[field][action];
 
         client[field][action] = async (...args: unknown[]) => {

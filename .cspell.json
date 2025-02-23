@@ -23,6 +23,7 @@
     "pkey",
     "plusplus",
     "postpack",
-    "trufflehog"
+    "trufflehog",
+    "venv"
   ]
 }

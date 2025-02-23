@@ -1,4 +1,4 @@
-import { Cache } from "./Prisma";
+import { Cache } from "../../models/Cache.model";
 import MemcachedClient from "memcached";
 
 export class Memcached implements Cache {
@@ -11,7 +11,7 @@ export class Memcached implements Cache {
     this.lifetime = lifetime;
   }
 
-  read(key: string): Promise<string | null> {
+  async read(key: string): Promise<string | null> {
     return new Promise((resolve, reject) => {
       this.client.get(key, (err: string, data: string | null) => {
         if (err) {
@@ -23,7 +23,7 @@ export class Memcached implements Cache {
     });
   }
 
-  write(key: string, value: string): Promise<void> {
+  async write(key: string, value: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.set(key, value, this.lifetime, (err: string) => {
         if (err) {
@@ -35,7 +35,7 @@ export class Memcached implements Cache {
     });
   }
 
-  flush(): Promise<void> {
+  async flush(): Promise<void> {
     return new Promise((resolve) => {
       this.client.flush(() => {
         resolve();
