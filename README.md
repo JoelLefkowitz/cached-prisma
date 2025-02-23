@@ -12,22 +12,23 @@ A Prisma client abstraction that simplifies caching.
 ```txt
 1000 read calls:
 ┌─────────────────┬─────────────┐
-│     (index)     │   time /s   │
+│ (index)         │ time /s     │
 ├─────────────────┼─────────────┤
-│  Without cache  │ 0.982411792 │
-│  LruMap cache   │  0.034117   │
-│ Memcached cache │ 0.053526041 │
-│   Redis cache   │ 0.046146417 │
+│ Without cache   │ 1.331080958 │
+│ LruCache cache  │ 0.063094375 │
+│ LfuCache cache  │ 0.078027083 │
+│ Memcached cache │ 0.096020000 │
+│ Redis cache     │ 0.082256416 │
 └─────────────────┴─────────────┘
-
 1000 read and write calls:
 ┌─────────────────┬─────────────┐
-│     (index)     │   time /s   │
+│ (index)         │ time /s     │
 ├─────────────────┼─────────────┤
-│  Without cache  │ 2.298558208 │
-│  LruMap cache   │  2.304989   │
-│ Memcached cache │ 2.305258458 │
-│   Redis cache   │ 2.307943167 │
+│ Without cache   │ 3.234715708 │
+│ LruCache cache  │ 3.225898334 │
+│ LfuCache cache  │ 3.238816667 │
+│ Memcached cache │ 3.234043625 │
+│ Redis cache     │ 3.228456083 │
 └─────────────────┴─────────────┘
 ```
 
@@ -145,38 +146,49 @@ const client = new Prisma().client;
 client.user.create({ data: { name: "Joel" } });
 ```
 
-## Discussion
+## Caches
 
-The default cache is a fixed size queue that pops values as it surpasses its
-maximum length.
+### LruCache
 
 ```ts
-import LruMap from "collections/lru-map";
+import { LruCache } from "cached-prisma";
 
-new LruCache(100);
+class LruCachePrisma extends Prisma {
+  static override cacheFactory = () => new LruCache(1000);
+}
 ```
 
-Memcached support is provided out of the box:
+### LfuCache
+
+```ts
+import { LfuCache } from "cached-prisma";
+
+class LfuCachePrisma extends Prisma {
+  static override cacheFactory = () => new LfuCache(1000);
+}
+```
+
+### Memcached
 
 ```ts
 import { Memcached } from "cached-prisma";
 
-class CustomPrisma extends Prisma {
+class MemcachedPrisma extends Prisma {
   static override cacheFactory = () => new Memcached("127.0.0.1", 11211, 10);
 }
 ```
 
-Also Redis support is provided out of the box:
+### Redis
 
 ```ts
 import { Redis } from "cached-prisma";
 
-class CustomPrisma extends Prisma {
+class RedisPrisma extends Prisma {
   static override cacheFactory = () => new Redis("127.0.0.1", 6379, 10);
 }
 ```
 
-The third constructor parameter each time is the storage lifetime of each write in seconds.
+## Actions
 
 Caches implement safe read and write methods:
 

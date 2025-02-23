@@ -32,8 +32,6 @@
   },
   "scripts": {
     "postinstall": "husky",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable",
     "lint": "cspell . --dot --gitignore && eslint . --fix && tsc --noEmit && trufflehog3",
     "format": "prettier . --write",
     "build": "tsc",
