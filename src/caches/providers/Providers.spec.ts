@@ -1,8 +1,10 @@
+import { Redis } from "./Redis";
 import { Memcached } from "./Memcached";
 
-describe("Memcached", () => {
-  const cache = new Memcached("0.0.0.0", 11211, 1);
-
+describe.each([
+  { name: "Redis", cache: new Redis("0.0.0.0", 6379, 1) },
+  { name: "Memcached", cache: new Memcached("0.0.0.0", 11211, 1) },
+])("$name", ({ cache }) => {
   afterAll(() => {
     cache.close();
   });
