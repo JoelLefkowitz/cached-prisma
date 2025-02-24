@@ -17,6 +17,7 @@
     "corepack",
     "datasource",
     "giphy",
+    "hazelcast",
     "jsdoc",
     "lefkowitz",
     "pinst",

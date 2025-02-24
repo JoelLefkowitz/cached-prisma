@@ -24,7 +24,8 @@
           "error",
           {
             "argsIgnorePattern": "^_",
-            "destructuredArrayIgnorePattern": "^_"
+            "destructuredArrayIgnorePattern": "^_",
+            "varsIgnorePattern": "^_"
           }
         ],
         "sort-imports-es6-autofix/sort-imports-es6": [

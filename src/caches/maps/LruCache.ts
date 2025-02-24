@@ -4,7 +4,7 @@ import LruMap from "collections/lru-map";
 export class LruCache implements Cache {
   private map: LruMap;
 
-  constructor(size: number) {
+  constructor(size: number = 1000) {
     this.map = new LruMap({}, size);
   }
 

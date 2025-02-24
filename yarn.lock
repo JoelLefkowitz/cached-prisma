@@ -1609,6 +1609,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/long@npm:4.0.0":
+  version: 4.0.0
+  resolution: "@types/long@npm:4.0.0"
+  checksum: 10c0/f7f8bbe44f4499a43fd373a1d1c4795fcb04d7329b85e13a6b9686ed2df63f423d10a45728371dcd8fa58ec4f0854c6acbbe0c94e7456b9dd058ec152987c194
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^4.0.0":
   version: 4.0.4
   resolution: "@types/mdast@npm:4.0.4"
@@ -1656,6 +1663,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~5.26.4"
   checksum: 10c0/b2f959899308c1d0145f831ef9b08d7dbed49641b50847a511f5ed0ca6628a3a40fb5540d906458247a49d1d6453b6fbc7d7b5b4f3095ece826ab7efb1e0ee4f
+  languageName: node
+  linkType: hard
+
+"@types/ramda@npm:^0":
+  version: 0.30.2
+  resolution: "@types/ramda@npm:0.30.2"
+  dependencies:
+    types-ramda: "npm:^0.30.1"
+  checksum: 10c0/dda95008860f594eb7b4fd9819adeb2dcd4d4e2baca6cb33f692f6f8ea76d04a7fd81f9a057c5c67555612769e5592cb15f91de6c9f8b619b8b1d806d19dc9ea
   languageName: node
   linkType: hard
 
@@ -1993,6 +2009,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ascii-table@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "ascii-table@npm:0.0.9"
+  checksum: 10c0/d485349d05b52d5cc686651a603c968fae881777be06aa4d14912683ee61b305e2558508659ec84837cb87f2a58ac7b72b99c05ea84da598cfe2cac9199dd527
+  languageName: node
+  linkType: hard
+
 "async@npm:^3.2.3":
   version: 3.2.6
   resolution: "async@npm:3.2.6"
@@ -2190,13 +2213,16 @@ __metadata:
     "@types/jest": "npm:29.0.0"
     "@types/memcached": "npm:^2.2.10"
     "@types/node": "npm:^18.11.0"
+    "@types/ramda": "npm:^0"
     "@typescript-eslint/eslint-plugin": "npm:^6.20.0"
     "@typescript-eslint/parser": "npm:^6.20.0"
+    ascii-table: "npm:^0.0.9"
     collections: "npm:^5.1.12"
     cspell: "npm:^8.0.0"
     eslint: "npm:^8.34.0"
     eslint-config-prettier: "npm:^8.0.0"
     eslint-plugin-sort-imports-es6-autofix: "npm:^0.6.0"
+    hazelcast-client: "npm:^5.3.0"
     husky: "npm:^9.0.0"
     ioredis: "npm:^5.4.1"
     jest: "npm:^29.0.0"
@@ -2205,6 +2231,7 @@ __metadata:
     prettier: "npm:^3.0.0"
     prettier-plugin-jsdoc: "npm:^1.3.0"
     prisma: "npm:^5.9.1"
+    ramda: "npm:^0.30.1"
     ts-jest: "npm:^29.0.0"
     ts-node: "npm:^10.9.2"
     tslib: "npm:^2.3.0"
@@ -3445,6 +3472,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hazelcast-client@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "hazelcast-client@npm:5.3.0"
+  dependencies:
+    "@types/long": "npm:4.0.0"
+    long: "npm:4.0.0"
+  checksum: 10c0/5e4f3fe4af113c03573d4f38a5302014c2bf70acf4089cb9a4907a1675cd237fa8bea51aaa7e50188e85462f918e18f7d02c326cfdb563e48386bc6e04891441
+  languageName: node
+  linkType: hard
+
 "html-escaper@npm:^2.0.0":
   version: 2.0.2
   resolution: "html-escaper@npm:2.0.2"
@@ -4409,6 +4446,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"long@npm:4.0.0":
+  version: 4.0.0
+  resolution: "long@npm:4.0.0"
+  checksum: 10c0/50a6417d15b06104dbe4e3d4a667c39b137f130a9108ea8752b352a4cfae047531a3ac351c181792f3f8768fe17cca6b0f406674a541a86fb638aaac560d83ed
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
@@ -5318,6 +5362,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ramda@npm:^0.30.1":
+  version: 0.30.1
+  resolution: "ramda@npm:0.30.1"
+  checksum: 10c0/3ea3e35c80e1a1b78c23de0c72d3382c3446f42052b113b851f1b7fc421e33a45ce92e7aef3c705cc6de3812a209d03417af5c264f67126cda539fd66c8bea71
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^18.0.0":
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
@@ -5869,6 +5920,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ts-toolbelt@npm:^9.6.0":
+  version: 9.6.0
+  resolution: "ts-toolbelt@npm:9.6.0"
+  checksum: 10c0/838f9a2f0fe881d5065257a23b402c41315b33ff987b73db3e2b39fcb70640c4c7220e1ef118ed5676763543724fdbf4eda7b0e2c17acb667ed1401336af9f8c
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^2.3.0":
   version: 2.8.0
   resolution: "tslib@npm:2.8.0"
@@ -5930,6 +5988,15 @@ __metadata:
   bin:
     typedoc: bin/typedoc
   checksum: 10c0/13878e6a9fc2b65d65e3b514efa11b43bdfd57149861cefc4a969ec213f4bc4b36ee9239d0b654ae18bcbbd5174206d409383f9000b7bdea22da1945f7ac91de
+  languageName: node
+  linkType: hard
+
+"types-ramda@npm:^0.30.1":
+  version: 0.30.1
+  resolution: "types-ramda@npm:0.30.1"
+  dependencies:
+    ts-toolbelt: "npm:^9.6.0"
+  checksum: 10c0/4a8b230ae9772e6534f65b1a154dd5604bcd1d74e27b49686337a215e83aa8fc93e49f8c49af395418d2950cb9fb9b900662077c1d4b73ff6fe4f4bcb83ab2d6
   languageName: node
   linkType: hard
 

@@ -1,9 +1,20 @@
-import { Redis } from "./Redis";
+import { Hazelcast } from "./Hazelcast";
 import { Memcached } from "./Memcached";
+import { Redis } from "./Redis";
 
 describe.each([
-  { name: "Redis", cache: new Redis("0.0.0.0", 6379, 1) },
-  { name: "Memcached", cache: new Memcached("0.0.0.0", 11211, 1) },
+  {
+    name: "Memcached",
+    cache: new Memcached("0.0.0.0", 11211, 1),
+  },
+  {
+    name: "Redis",
+    cache: new Redis("0.0.0.0", 6379, 1),
+  },
+  {
+    name: "Hazelcast",
+    cache: new Hazelcast("0.0.0.0", 5701, 1),
+  },
 ])("$name", ({ cache }) => {
   afterAll(() => {
     cache.close();

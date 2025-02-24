@@ -10,26 +10,30 @@ A Prisma client abstraction that simplifies caching.
 ![Coverage](https://img.shields.io/codacy/coverage/00658bb866d6482184b86d16d3ce5ae8)
 
 ```txt
-1000 read calls:
-┌─────────────────┬─────────────┐
-│ (index)         │ time /s     │
-├─────────────────┼─────────────┤
-│ Without cache   │ 1.331080958 │
-│ LruCache cache  │ 0.063094375 │
-│ LfuCache cache  │ 0.078027083 │
-│ Memcached cache │ 0.096020000 │
-│ Redis cache     │ 0.082256416 │
-└─────────────────┴─────────────┘
-1000 read and write calls:
-┌─────────────────┬─────────────┐
-│ (index)         │ time /s     │
-├─────────────────┼─────────────┤
-│ Without cache   │ 3.234715708 │
-│ LruCache cache  │ 3.225898334 │
-│ LfuCache cache  │ 3.238816667 │
-│ Memcached cache │ 3.234043625 │
-│ Redis cache     │ 3.228456083 │
-└─────────────────┴─────────────┘
+.----------------------------.
+|        Read x 1000         |
+|----------------------------|
+|      Cache      |  time/s  |
+|-----------------|----------|
+| Memcached       | 0.633634 |
+| Hazelcast       | 0.571334 |
+| Redis           | 0.621926 |
+| LfuCache        | 0.828305 |
+| LruCache        | 0.763399 |
+| Without a cache | 1.059614 |
+'----------------------------'
+.----------------------------.
+|  Read and overwrite x 100  |
+|----------------------------|
+|      Cache      |  time/s  |
+|-----------------|----------|
+| Memcached       | 0.346509 |
+| Hazelcast       | 0.249805 |
+| Redis           | 0.325970 |
+| LfuCache        | 0.407265 |
+| LruCache        | 0.392114 |
+| Without a cache | 0.222564 |
+'----------------------------'
 ```
 
 ## Installing
@@ -45,6 +49,10 @@ Documentation and more detailed examples are hosted on [Github Pages](https://jo
 ## Usage
 
 ```ts
+import { Prisma } from "cached-prisma";
+
+const client = new Prisma().client;
+
 client.user.create({ data: { name: "Joel" } });
 
 // This populates the cache
@@ -54,37 +62,17 @@ client.user.findFirst({ where: { name: "Joel" } });
 client.user.findFirst({ where: { name: "Joel" } });
 ```
 
-To control the object used for cache storage you can extend the Prisma class:
+To control the object used for cache storage you can extend the `Prisma` class:
 
 ```ts
 import { LruCache } from "cached-prisma";
 
-class CustomPrisma extends Prisma {
-  static override cacheFactory = () => new LruCache(100);
+class LruCachePrisma extends Prisma {
+  static override cacheFactory = () => new LruCache(1000);
 }
 ```
 
-To implement the cache we need to divert the prisma client's internals so that we
-can return cached values without hitting the database. To do this we can use a
-singleton instance for the client and cache objects.
-
-```ts
-import { Prisma } from "cached-prisma";
-
-const client1 = new Prisma().client;
-const client2 = new Prisma().client;
-
-client1 === client2;
-```
-
-```ts
-import { Prisma } from "cached-prisma";
-
-const cache1 = new Prisma().cache;
-const cache2 = new Prisma().cache;
-
-cache1 === cache2;
-```
+Caches are also provided for `Memcached`, `Redis`, and `Hazelcast`.
 
 ### Minimal example
 
@@ -188,7 +176,41 @@ class RedisPrisma extends Prisma {
 }
 ```
 
-## Actions
+### Hazelcast
+
+```ts
+import { Hazelcast } from "cached-prisma";
+
+class HazelcastPrisma extends Prisma {
+  static override cacheFactory = () => new Hazelcast("127.0.0.1", 5701, 10);
+}
+```
+
+## Design
+
+To implement the cache we need to divert the prisma client's internals so that we can return cached values without hitting the database. To do this we can use a singleton instance for the client and cache objects.
+
+```ts
+import { Prisma } from "cached-prisma";
+
+const client1 = new Prisma().client;
+const client2 = new Prisma().client;
+
+// These point to the same object
+client1 === client2;
+```
+
+```ts
+import { Prisma } from "cached-prisma";
+
+const cache1 = new Prisma().cache;
+const cache2 = new Prisma().cache;
+
+// These point to the same object
+cache1 === cache2;
+```
+
+### Actions
 
 Caches implement safe read and write methods:
 
@@ -202,23 +224,23 @@ export interface Cache {
 
 We cache the following methods which do not mutate state:
 
-- findUnique
-- findMany
-- findFirst
-- queryRaw
-- aggregate
-- count
+- `findUnique`
+- `findMany`
+- `findFirst`
+- `queryRaw`
+- `aggregate`
+- `count`
 
 After any of the following state mutating methods we flush the cache:
 
-- create
-- createMany
-- delete
-- deleteMany
-- executeRaw
-- update
-- updateMany
-- upsert
+- `create`
+- `createMany`
+- `delete`
+- `deleteMany`
+- `executeRaw`
+- `update`
+- `updateMany`
+- `upsert`
 
 ## Tooling
 
@@ -250,14 +272,15 @@ Create test cache providers:
 ```bash
 docker run --rm -d -p 11211:11211 memcached
 docker run --rm -d -p 6379:6379 redis
+docker run --rm -d -p 5701:5701 hazelcast/hazelcast
 ```
 
 Apply the database migrations:
 
 ```bash
 export DATABASE_URL=postgresql://user:password@localhost:5432/db
-yarn prisma generate --schema ./test/prisma/schema.prisma
-yarn prisma migrate dev --schema ./test/prisma/schema.prisma
+yarn prisma generate --schema ./test/schema.prisma
+yarn prisma migrate dev --schema ./test/schema.prisma
 ```
 
 ```bash

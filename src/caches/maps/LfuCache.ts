@@ -4,7 +4,7 @@ import LfuMap from "collections/lfu-map";
 export class LfuCache implements Cache {
   private map: LfuMap;
 
-  constructor(size: number) {
+  constructor(size: number = 1000) {
     this.map = new LfuMap({}, size);
   }
 
