@@ -1,13 +1,23 @@
 import { Cache } from "../../models/Cache.model";
-import { Redis as RedisClient } from "ioredis";
+import { Redis as RedisClient, RedisOptions } from "ioredis";
 
 export class Redis implements Cache {
   readonly lifetime: number;
 
   private client: RedisClient;
 
-  constructor(host = "0.0.0.0", port = 6379, lifetime = 10, prefix = "cache") {
-    this.client = new RedisClient(port, host, { keyPrefix: prefix });
+  constructor(
+    host = "0.0.0.0",
+    port = 6379,
+    lifetime = 10,
+    prefix = "cache",
+    options: RedisOptions = {},
+  ) {
+    this.client = new RedisClient(port, host, {
+      keyPrefix: prefix,
+      ...options,
+    });
+
     this.lifetime = lifetime;
   }
 

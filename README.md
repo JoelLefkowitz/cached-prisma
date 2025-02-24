@@ -162,7 +162,7 @@ class LfuCachePrisma extends Prisma {
 import { Memcached } from "cached-prisma";
 
 class MemcachedPrisma extends Prisma {
-  static override cacheFactory = () => new Memcached("127.0.0.1", 11211, 10);
+  static override cacheFactory = () => new Memcached("0.0.0.0", 11211, 10);
 }
 ```
 
@@ -172,7 +172,7 @@ class MemcachedPrisma extends Prisma {
 import { Redis } from "cached-prisma";
 
 class RedisPrisma extends Prisma {
-  static override cacheFactory = () => new Redis("127.0.0.1", 6379, 10);
+  static override cacheFactory = () => new Redis("0.0.0.0", 6379, 10);
 }
 ```
 
@@ -182,7 +182,7 @@ class RedisPrisma extends Prisma {
 import { Hazelcast } from "cached-prisma";
 
 class HazelcastPrisma extends Prisma {
-  static override cacheFactory = () => new Hazelcast("127.0.0.1", 5701, 10);
+  static override cacheFactory = () => new Hazelcast("0.0.0.0", 5701, 10);
 }
 ```
 

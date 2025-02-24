@@ -14,7 +14,9 @@ export const time = async ({
     const timer = process.hrtime();
 
     for (const i of range(0, cycles)) {
-      await progress(`${name} - ${title}: [${i}/${cycles}]`, () => task(client));
+      await progress(`${name} - ${title}: [${i}/${cycles}]`, () =>
+        task(client),
+      );
     }
 
     const [integer, fractional] = process.hrtime(timer);

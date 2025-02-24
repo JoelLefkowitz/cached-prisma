@@ -6,8 +6,13 @@ export class Memcached implements Cache {
 
   private client: MemcachedClient;
 
-  constructor(host = "0.0.0.0", port = 11211, lifetime = 10) {
-    this.client = new MemcachedClient(`${host}:${port}`);
+  constructor(
+    host = "0.0.0.0",
+    port = 11211,
+    lifetime = 10,
+    options: MemcachedClient.options = {},
+  ) {
+    this.client = new MemcachedClient([host, port].join(":"), options);
     this.lifetime = lifetime;
   }
 

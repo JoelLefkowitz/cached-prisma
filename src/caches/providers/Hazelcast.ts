@@ -1,5 +1,9 @@
 import { Cache } from "../../models/Cache.model";
-import { Client as HazelcastClient, IMap } from "hazelcast-client";
+import {
+  ClientConfig,
+  Client as HazelcastClient,
+  IMap,
+} from "hazelcast-client";
 
 export class Hazelcast implements Cache {
   readonly lifetime: number;
@@ -7,14 +11,22 @@ export class Hazelcast implements Cache {
   private client: Promise<HazelcastClient>;
   private map: Promise<IMap<string, string>>;
 
-  constructor(host = "0.0.0.0", port = 5701, lifetime = 10) {
+  constructor(
+    host = "0.0.0.0",
+    port = 5701,
+    lifetime = 10,
+    options: ClientConfig = {},
+  ) {
     this.client = HazelcastClient.newHazelcastClient({
-      network: { clusterMembers: [`${host}:${port}`] },
+      network: {
+        clusterMembers: [[host, port].join(":")],
+      },
+
+      ...options,
     });
 
-    this.lifetime = lifetime;
-
     this.map = this.client.then((client) => client.getMap("distributed-map"));
+    this.lifetime = lifetime;
   }
 
   async read(key: string): Promise<string | null> {
