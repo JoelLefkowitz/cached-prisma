@@ -1,17 +1,11 @@
-import { tabulate } from "./tabulate";
-import { tests } from "./tests";
-import { time } from "./timers";
+import { scenarios } from "./inputs/scenarios";
+import { tabulate } from "./actions/tabulate";
+import { time } from "./actions/time";
 
 (async () => {
-  for (const {name, cycles, task} of tests) {
-    const results = await time(cycles, task);
-
-    console.log(
-      tabulate(
-        `${name} x ${cycles}`,
-        ["Cache", "time/s"],
-        Object.entries(results),
-      ),
-    );
+  for (const scenario of scenarios) {
+    const { name, cycles } = scenario;
+    const results = await time(scenario);
+    console.log(tabulate(`${name} x ${cycles}`, ["Cache", "time/s"], results));
   }
 })();

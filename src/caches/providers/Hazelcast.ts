@@ -32,7 +32,12 @@ export class Hazelcast implements Cache {
     await map.flush();
   }
 
+  async disconnect(): Promise<void> {
+    const client = await this.client;
+    await client.shutdown();
+  }
+
   close(): void {
-    this.client.then((client) => client.shutdown());
+    this.disconnect();
   }
 }

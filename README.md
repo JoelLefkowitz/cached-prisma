@@ -10,29 +10,29 @@ A Prisma client abstraction that simplifies caching.
 ![Coverage](https://img.shields.io/codacy/coverage/00658bb866d6482184b86d16d3ce5ae8)
 
 ```txt
+.-----------------------------.
+|        Read x 10000         |
+|-----------------------------|
+|      Cache      |  time/s   |
+|-----------------|-----------|
+| LruCache        |  0.133111 |
+| LfuCache        |  0.073968 |
+| Memcached       |  0.118672 |
+| Redis           |  0.071997 |
+| Hazelcast       |  0.075136 |
+| Without a cache | 10.554741 |
+'-----------------------------'
 .----------------------------.
-|        Read x 1000         |
+| Read and overwrite x 1000  |
 |----------------------------|
 |      Cache      |  time/s  |
 |-----------------|----------|
-| Memcached       | 0.633634 |
-| Hazelcast       | 0.571334 |
-| Redis           | 0.621926 |
-| LfuCache        | 0.828305 |
-| LruCache        | 0.763399 |
-| Without a cache | 1.059614 |
-'----------------------------'
-.----------------------------.
-|  Read and overwrite x 100  |
-|----------------------------|
-|      Cache      |  time/s  |
-|-----------------|----------|
-| Memcached       | 0.346509 |
-| Hazelcast       | 0.249805 |
-| Redis           | 0.325970 |
-| LfuCache        | 0.407265 |
-| LruCache        | 0.392114 |
-| Without a cache | 0.222564 |
+| LruCache        | 1.980747 |
+| LfuCache        | 1.736129 |
+| Memcached       | 1.661834 |
+| Redis           | 1.650579 |
+| Hazelcast       | 1.613310 |
+| Without a cache | 1.562942 |
 '----------------------------'
 ```
 
@@ -51,7 +51,7 @@ Documentation and more detailed examples are hosted on [Github Pages](https://jo
 ```ts
 import { Prisma } from "cached-prisma";
 
-const client = new Prisma().client;
+const { client } = new Prisma();
 
 client.user.create({ data: { name: "Joel" } });
 
@@ -129,7 +129,7 @@ Now we can create our client:
 ```ts
 import { Prisma } from "cached-prisma";
 
-const client = new Prisma().client;
+const { client } = new Prisma();
 
 client.user.create({ data: { name: "Joel" } });
 ```

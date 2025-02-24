@@ -16,13 +16,13 @@ describe("Prisma", () => {
   });
 
   it("caches results.", async () => {
-    const prisma = new Prisma();
+    const { client, cache } = new Prisma();
 
-    const user = await prisma.client.user.create({ data: { name: "test" } });
-    await prisma.client.user.findFirst({ where: { id: user.id } });
+    const user = await client.user.create({ data: { name: "test" } });
+    await client.user.findFirst({ where: { id: user.id } });
 
     expect(
-      await prisma.cache.read(
+      await cache.read(
         JSON.stringify({
           field: "user",
           action: "findFirst",
@@ -33,14 +33,14 @@ describe("Prisma", () => {
   });
 
   it("flushes the cache after mutations.", async () => {
-    const prisma = new Prisma();
+    const { client, cache } = new Prisma();
 
-    const user = await prisma.client.user.create({ data: { name: "test" } });
-    await prisma.client.user.findFirst({ where: { id: user.id } });
-    await prisma.client.user.create({ data: { name: "test" } });
+    const user = await client.user.create({ data: { name: "test" } });
+    await client.user.findFirst({ where: { id: user.id } });
+    await client.user.create({ data: { name: "test" } });
 
     expect(
-      await prisma.cache.read(
+      await cache.read(
         JSON.stringify({
           field: "user",
           action: "findFirst",
