@@ -32,18 +32,18 @@ It's unlikely they'll ever support caching outside of accelerate with services l
 | Hazelcast       |  0.075136 |
 | Without a cache | 10.554741 |
 '-----------------------------'
-.----------------------------.
-| Read and overwrite x 1000  |
-|----------------------------|
-|      Cache      |  time/s  |
-|-----------------|----------|
-| LruCache        | 1.980747 |
-| LfuCache        | 1.736129 |
-| Memcached       | 1.661834 |
-| Redis           | 1.650579 |
-| Hazelcast       | 1.613310 |
-| Without a cache | 1.562942 |
-'----------------------------'
+.-----------------------------.
+|  Read and overwrite x 1000  |
+|-----------------------------|
+|      Cache      |  time/s   |
+|-----------------|-----------|
+| LruCache        |  1.980747 |
+| LfuCache        |  1.736129 |
+| Memcached       |  1.661834 |
+| Redis           |  1.650579 |
+| Hazelcast       |  1.613310 |
+| Without a cache |  1.562942 |
+'-----------------------------'
 ```
 
 ## Installing

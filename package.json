@@ -45,6 +45,7 @@
   "dependencies": {
     "@prisma/client": "^5.9.1",
     "collections": "^5.1.12",
+    "hazelcast-client": "^5.3.0",
     "ioredis": "^5.4.1",
     "memcached": "^2.2.2",
     "prisma": "^5.9.1"
@@ -63,7 +64,6 @@
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
-    "hazelcast-client": "^5.3.0",
     "husky": "^9.0.0",
     "jest": "^29.0.0",
     "pinst": "^3.0.0",
