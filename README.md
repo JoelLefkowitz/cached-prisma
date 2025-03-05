@@ -9,6 +9,16 @@ A Prisma client abstraction that simplifies caching.
 ![Quality](https://img.shields.io/codacy/grade/00658bb866d6482184b86d16d3ce5ae8)
 ![Coverage](https://img.shields.io/codacy/coverage/00658bb866d6482184b86d16d3ce5ae8)
 
+## Motivation
+
+Prisma bundles their caching features into [Accelerate](https://www.prisma.io/accelerate) which is sold as a subscription.
+
+It's unlikely they'll ever support caching outside of accelerate with services like `Memcached` and `Redis`. This package adds the caching logic to the prisma client for your choice of cache provider.
+
+![Caching](./docs/images/caching.png)
+
+### Performance
+
 ```txt
 .-----------------------------.
 |        Read x 10000         |
