@@ -41,7 +41,7 @@ export class Hazelcast implements Cache {
 
   async flush(): Promise<void> {
     const map = await this.map;
-    await map.flush();
+    await map.clear();
   }
 
   async disconnect(): Promise<void> {

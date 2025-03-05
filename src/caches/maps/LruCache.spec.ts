@@ -2,7 +2,7 @@ import { LruCache } from "./LruCache";
 
 describe("LruCache", () => {
   it("should cache entries.", async () => {
-    const cache = new LruCache(10);
+    const cache = new LruCache();
     await cache.write("a", "1");
 
     expect(await cache.read("a")).toBe("1");
@@ -10,7 +10,7 @@ describe("LruCache", () => {
   });
 
   it("should update entries.", async () => {
-    const cache = new LruCache(10);
+    const cache = new LruCache();
     await cache.write("a", "1");
     await cache.write("a", "2");
 
@@ -39,5 +39,13 @@ describe("LruCache", () => {
     expect(await cache.read("a")).toBe("1");
     expect(await cache.read("b")).toBeNull();
     expect(await cache.read("c")).toBe("3");
+  });
+
+  it("should flush.", async () => {
+    const cache = new LruCache();
+    await cache.write("a", "1");
+
+    await cache.flush();
+    expect(await cache.read("a")).toBeNull();
   });
 });
