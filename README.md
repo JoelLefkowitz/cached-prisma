@@ -2,7 +2,7 @@
 
 Add a caching interface to Prisma, compatible with Memcached, Redis and Hazelcast.
 
-![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/cached-prisma/review.yml)
+![Review](https://img.shields.io/github/actions/workflow/status/JoelLefkowitz/cached-prisma/review.yaml)
 ![Version](https://img.shields.io/npm/v/cached-prisma)
 ![Downloads](https://img.shields.io/npm/dw/cached-prisma)
 ![Size](https://img.shields.io/bundlephobia/min/cached-prisma)
